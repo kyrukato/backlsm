@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeedModule } from './seed/seed.module';
 import { DictionaryModule } from './dictionary/dictionary.module';
-import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -19,7 +19,7 @@ import { UsersModule } from './users/users.module';
     }),
     SeedModule,
     DictionaryModule,
-    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
