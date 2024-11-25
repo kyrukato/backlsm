@@ -10,5 +10,6 @@ import { Dictionary } from './entities/dictionary.entity';
   imports: [
     TypeOrmModule.forFeature([Dictionary])
   ],
+  exports: [DictionaryService, TypeOrmModule],
 })
 export class DictionaryModule {}

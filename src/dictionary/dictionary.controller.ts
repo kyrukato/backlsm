@@ -12,23 +12,8 @@ export class DictionaryController {
     return this.dictionaryService.create(createDictionaryDto);
   }
 
-  @Get()
-  findAll() {
-    return this.dictionaryService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dictionaryService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDictionaryDto: UpdateDictionaryDto) {
-    return this.dictionaryService.update(+id, updateDictionaryDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.dictionaryService.remove(+id);
+  @Get(':cat')
+  findOne(@Param('cat') cat: string) {
+    return this.dictionaryService.findOne(cat);
   }
 }

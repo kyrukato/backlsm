@@ -344,253 +344,253 @@ export const initialData: seedData ={
         {
             name:'AZUL',
             description: 'Con la mano base con la palma hacia arriba y con los dedos extendidos se coloca la mano dominante con los dedos del índice al meñique flexionados hacia la palma y con el pulgar extendido, se hace un movimiento de atrás hacia delante con la mano dominante sobre la mano base.',
-            imageURL: '/Colores/AZUL.jpg',
+            imageURL: '/Colores/AZUL.png',
             class: 'Colores'
         },
         {
             name:'AMARILLO',
             description: 'Con la mano base formando un puño y con el dorso hacia arriba, se coloca encima la mano dominante con la palma hacia arriba y los dedos del índice al meñique flexionados hacia la palma y el dedo pulgar extendido, se hace un movimiento de atrás hacia delante con la mano dominante sobre la mano base.',
-            imageURL: '/Colores/AMARILLO.jpg',
+            imageURL: '/Colores/AMARILLO.png',
             class: 'Colores'
         },
         {
             name:'BLANCO',
             description: 'Con la mano base con la palma hacia arriba se coloca la mano base con la palma hacia arriba con los dedos índice al meñique extendidos y juntos y con el pulgar flexionado hacia la palma, se hace un movimiento de atrás hacia adelante con la mano dominante sobre la mano base.',
-            imageURL: '/Colores/BLANCO.jpg',
+            imageURL: '/Colores/BLANCO.png',
             class: 'Colores'
         },
         {
             name:'CAFE',
             description: 'Con la mano base de manera horizontal se hace un puño, mientras que con la mano dominante se flexionan un poco los dedos formando una \'C\' y se hacen movimientos circulares sobre la mano base.',
-            imageURL: '/Colores/CAFE.jpg',
+            imageURL: '/Colores/CAFE.png',
             class: 'Colores'
         },
         {
             name:'GRIS',
             description: 'Con la mano base con la palma hacia arriba y los dedos extendidos se coloca el costado de la mano dominante don los dedos del medio al meñique flexionados hacia la palma y con los dedos índice y pulgar extendidos sin tocarse, se hace un movimiento de atrás hacia adelante con la mano dominante sobre la mano base.',
-            imageURL: '/Colores/GRIS.jpg',
+            imageURL: '/Colores/GRIS.png',
             class: 'Colores'
         },
         {
             name:'MORADO',
             description: 'Con la mano base de manera horizontal se extienen juntos los dedos del índice al meñique mientras que el pulgar se flexiona hacia la palma, la mano dominante se coloca sobre la mano base en forma vertical con los dedos meñique y pulgar flexionados hacia la palma y los dedos del índice al anular estendidos y juntos se colocan sobre la mano base y se hace un movimiento de atrás hacia adelante.',
-            imageURL: '/Colores/MORADO.jpg',
+            imageURL: '/Colores/MORADO.png',
             class: 'Colores'
         },
         {
             name:'NARANJA',
             description: 'Con la mano dominante cerca de la cara a la altura de los ojos, se hace un movimiento donde se flexionan los dedos hacia el interior formando un puño.',
-            imageURL: '/Colores/NARANJA.jpg',
+            imageURL: '/Colores/NARANJA.png',
             class: 'Colores'
         },
         {
             name:'NEGRO',
             description: 'Con la mano base extendida hacia el frente y con la palma hacia arriba se extienden los dedos y se coloca sobre ella la mano dominante que tiene los dedos anular, meñique y pulgar flexionados hacia la palma y los dedos índice y medio están extendidos y juntos, se hace un movimiento hacia atras y hacia adelante con la mano dominante sobre la mano base.',
-            imageURL: '/Colores/NEGRO.jpg',
+            imageURL: '/Colores/NEGRO.png',
             class: 'Colores'
         },
         {
             name:'ORO',
             description: 'Con la mano base con la palma hacia arriba se extienden los dedos y sobre ella se coloca la mano dominante con los dedos ligeramente flexionados formando una \'O\' y se hace un movimiento de arriba hacia abajo sobre la mano base.',
-            imageURL: '/Colores/ORO.jpg',
+            imageURL: '/Colores/ORO.png',
             class: 'Colores'
         },
         {
             name:'PLATA',
             description: 'Con la mano base con la palma hacia arriba se extienen los dedos y sobre ella se coloca la mano dominanrte con los dedos anular y meñique flecionados hacia la palma, los dedos índice y medio extendidos formando una \'L\', se hace un movimiento con la mano dominante de arriba hacia abajo sobre la mano base.',
-            imageURL: '/Colores/PLATA.jpg',
+            imageURL: '/Colores/PLATA.png',
             class: 'Colores'
         },
         {
             name:'ROJO',
             description: 'Con la mano dominante mostrando el dorso se flexionan los dedos anular, meñique y pulgar hacia la palma, mientras que los dedos índice y medio extendidos se entrelazan, y se hace un movimiento de arriba hacia abajo sobre la barbilla.',
-            imageURL: '/Colores/ROJO.jpg',
+            imageURL: '/Colores/ROJO.png',
             class: 'Colores'
         },
         {
             name:'ROSA',
             description: 'Con la mano base con la palma hacia arriba se extienden los dedos y se coloca encima la mano dominante, con los dedos anular, meñique y pulgar flexionados hacia la palma y los dedos índice y medio extendidos y entrelazados, se hace un movimiento de atrás hacia adelante sobre la mano base.',
-            imageURL: '/Colores/ROSA.jpg',
+            imageURL: '/Colores/ROSA.png',
             class: 'Colores'
         },
         {
             name:'VERDE',
             description: 'Con la mano base con la palma hacia arriba se extienden los dedos y se coloca sobre ella la mano dominante con los dedos anular, meñique y pulgar flecionados hacia la palma, los dedos índice y medio se extienden sin tocarse, se hace un movimiento de atrás hacia adelante sobre la mano base.',
-            imageURL: '/Colores/VERDE.jpg',
+            imageURL: '/Colores/VERDE.png',
             class: 'Colores'
         },
         {
             name:'ENERO',
             description: 'Con la mano dominante y con la palma hacia el frente se flexionan los dedos sin cubrir la palma de la mano, se hace un movimiento de izquierda a derecha con la muñeca.',
-            imageURL: '/Fechas/ENERO.jpg',
+            imageURL: '/Fechas/ENERO.png',
             class: 'Fechas'
         },
         {
             name:'FEBRERO',
             description: 'Con la mano dominante y con la palma hacia el frente se extienden juntos los dedos del medio al meñique, el pulgar se coloca bajo el dedo índice y éste se flexiona un poco, se hace un movimiento de izquierda a derecha con la muñeca.',
-            imageURL: '/Fechas/FEBRERO.jpg',
+            imageURL: '/Fechas/FEBRERO.png',
             class: 'Fechas'
         },
         {
             name:'MARZO',
             description: 'Con la mano dominante, se flexionan los dedos meñique y pulgar hacia la palma mientras que los dedos del índice al anular se extienden juntos, se hace un movimiento circular alrededor de la oreja.',
-            imageURL: '/Fechas/MARZO.jpg',
+            imageURL: '/Fechas/MARZO.png',
             class: 'Fechas'
         },
         {
             name:'ABRIL',
             description: 'Con la mano dominante, se flexionan los dedos del índice al meñique hacia la palma, se hace un movimiento circular alrededor de la oreja con la mano dominante.',
-            imageURL: '/Fechas/MARZO.jpg',
+            imageURL: '/Fechas/MARZO.png',
             class: 'Fechas'
         },
         {
             name:'MAYO',
             description: 'Con la mano dominante y con la palma hacia el frente se flexionan los dedos meñique y pulgar hacia la palma mienntras que los dedos del índice al anular se extienden juntos, se hace un movimiento con la muñeca de izquierda a derecha.',
-            imageURL: '/Fechas/MAYO.jpg',
+            imageURL: '/Fechas/MAYO.png',
             class: 'Fechas'
         },
         {
             name:'JUNIO',
             description: 'Con la mano dominante y con la palma hacia el frente se flexionan los dedos del índice al anular y el pulgar hacia la palma de la mano, se deja extendido el dedo meñique, se hace un movimiento de izquierda a derecha con la muñeca.',
-            imageURL: '/Fechas/JUNIO.jpg',
+            imageURL: '/Fechas/JUNIO.png',
             class: 'Fechas'
         },
         {
             name:'JULIO',
             description: 'Con la mano dominante y con la palma hacia el frente se flexionan los dedos medio y anular, los dedos índice, meñique y pulgar se dejan extendidos, se hace un movimiento de izquierda a derecha con la muñeca.',
-            imageURL: '/Fechas/JULIO.jpg',
+            imageURL: '/Fechas/JULIO.png',
             class: 'Fechas'
         },
         {
             name:'AGOSTO',
             description: 'Con la mano dominante se flexionan los dedos del índice al meñique hacia la palma y el pulgar se coloca en el costado de la mano, se gira la muñeca de izquierda a derecha.',
-            imageURL: '/Fechas/AGOSTO.jpg',
+            imageURL: '/Fechas/AGOSTO.png',
             class: 'Fechas'
         },
         {
             name:'SEPTIEMBRE',
             description: 'Con la mano dominante se flexionan los dedos formando un puño cerrado, se gira la muñeca de izquierda a derecha.',
-            imageURL: '/Fechas/SEPTIEMBRE.jpg',
+            imageURL: '/Fechas/SEPTIEMBRE.png',
             class: 'Fechas'
         },
         {
             name:'OCTUBRE',
             description: 'Con la mano dominante con la palma hacia el frente, se flexionan ligeramente los dedos del índice al meñique y te tocan con el pulgar formando una \'O\', se gira la muñeca de izquierda a derecha.',
-            imageURL: '/Fechas/OCTUBRE.jpg',
+            imageURL: '/Fechas/OCTUBRE.png',
             class: 'Fechas'
         },
         {
             name:'NOVIEMBRE',
             description: 'Con la mano dominante y con la palma hacia el frente se flexionan los dedos anular, meñique y pulgar, los dedos índice y medio se extienden juntos, con la muñeca se hace un movimiento de izquierda a derecha.',
-            imageURL: '/Fechas/NOVIEMBRE.jpg',
+            imageURL: '/Fechas/NOVIEMBRE.png',
             class: 'Fechas'
         },
         {
             name:'DICIEMBRE',
             description: 'Con la mano dominante y con la palma hacia el frente, se flxionan ligeramente los dedos del medio al meñique tocando el pulgar, el dedo índice se extiende, con la muñeca se hace un movimiento de izquierda a derecha.',
-            imageURL: 'DICIEMBRE',
+            imageURL: '/Fechas/DICIEMBRE.png',
             class: 'Fechas'
         },
         {
             name:'LUNES',
             description: 'Con la mano dominante y con la palma hacia el frente, se flexionan los dedos del medio al meñique, los dedos índice y pulgar se extienden sin tocarse formando una \'L\', se hace un movimiento circular en sentido contrario a las manecillas del reloj',
-            imageURL: '/Fechas/LUNES.jpg',
+            imageURL: '/Fechas/LUNES.png',
             class: 'Fechas'
         },
         {
             name:'MARTES',
             description: 'Con la mano dominante y con la palma hacia el frente, se flexionan los dedos anular y meñique, los dedos índice, medio y pulgar se extienden, los dedos índice y medio se quedan juntos, se hace un movimiento circular en sentido contrario a las manecillas del reloj.',
-            imageURL: '/Fechas/MARTES.jpg',
+            imageURL: '/Fechas/MARTES.png',
             class: 'Fechas'
         },
         {
             name:'MIERCOLES',
             description: 'Con la mano dominante y con la palma hacia el frente, se flexionan los dedos meñique y pulgar, los dedos del índice al anular se extienden juntos, se hace un movimiento circular en sentido contrario a las manecillas del reloj.',
-            imageURL: '/Fechas/MIERCOLES.jpg',
+            imageURL: '/Fechas/MIERCOLES.png',
             class: 'Fechas'
         },
         {
             name:'JUEVES',
             description: 'Con la mano dominante y con la palma hacia el frente, se flexionan los dedos formando un puño, el dedo meñique se deja estendido, se hace un movimiento circular en sentido contrario a las manecillas del reloj.',
-            imageURL: '/Fechas/JUEVES.jpg',
+            imageURL: '/Fechas/JUEVES.png',
             class: 'Fechas'
         },
         {
             name:'VIERNES',
             description: 'Con la mano dominante y con la palma hacia el frente, se flexionan los dedos anular, meñique y pulgar, los dedos índice y medio se extienden separados, se hace un movimiento circular en sentido contrario a las manecillas del reloj.',
-            imageURL: '/Fechas/VIERNES.jpg',
+            imageURL: '/Fechas/VIERNES.png',
             class: 'Fechas'
         },
         {
             name:'SABADO',
             description: 'Con la mano dominante y con la palma hacia el frente, se flexionan los dedos formando un puño cerrado, se hace un movimiento circular en sentido contrario a las manecillas del reloj.',
-            imageURL: '/Fechas/SABADO.jpg',
+            imageURL: '/Fechas/SABADO.png',
             class: 'Fechas'
         },
         {
             name:'DOMINGO',
             description: 'Con la mano dominante y con la palma hacia el frente, se flexionan ligeramente los dedos del medio al meñique tocando el pulgar, el dedo índice se extiende, se hace un movimiento circular en sentido contrario a las manecillas del reloj.',
-            imageURL: '/Fechas/DOMINGO.jpg',
+            imageURL: '/Fechas/DOMINGO.png',
             class: 'Fechas'
         },
         {
             name:'CEREZA',
             description: 'Con la mano dominante con los dedos ligeramente flexionados del índice al meñique y tocando el pulgar, se hace un movimiento hacia el rostro, donde se extiende el dedo índice y una vez llegado a la barbilla se hace un movimiento repetido de arriba hacia abajo.',
-            imageURL: '/Frutas-Verduras/CEREZA.jpg',
+            imageURL: '/Frutas-Verduras/CEREZA.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'DURAZNO',
             description: 'Se coloca la mano base con el dorso hacia arriba y con la mano cerrada formando un puño, se coloca la mano dominante con los dedos flexionados ligeramente del índice al meñique tocando el pulgar, se hace un movimiento donde la mano dominante recorre la mano base desde el antebrazo hasta la mano.',
-            imageURL: '/Frutas-Verduras/DURAZNO.jpg',
+            imageURL: '/Frutas-Verduras/DURAZNO.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'FRESA',
             description: 'Con la mano dominante con los dedos del medio al meñique extendidos, el dedo índice ligeramente flexionado tocando el pulgar, se toca la cara en repetidas ocasiones en la zona debajo del ojo derecho recorriendo hacia la nariz y terminando bajo el ojo izquierdo.',
-            imageURL: '/Frutas-Verduras/FRESA.jpg',
+            imageURL: '/Frutas-Verduras/FRESA.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'MANGO',
             description: 'Con la mano dominante mostrando el dorso, se flexionan ligeramente los dedos sin tocar el pulgar, se hace un movimiento repetido en la zona de la cara recorriendo desde la frente hasta la punta de la nariz.',
-            imageURL: '/Frutas-Verduras/MANGO.jpg',
+            imageURL: '/Frutas-Verduras/MANGO.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'MANZANA',
             description: 'Con la mano dominante se flexionan los dedos meñique y pulgar, los dedos del índice al anular se extienden juntos, se hace un movimiento circular la zona de la mejilla.',
-            imageURL: '/Frutas-Verduras/MANZANA.jpg',
+            imageURL: '/Frutas-Verduras/MANZANA.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'NARANJA',
             description: 'Con la mano dominante cerca de la cara a la altura de los ojos, se hace un movimiento donde se flexionan los dedos hacia el interior formando un puño.',
-            imageURL: '/Frutas-Verduras/NARANJA.jpg',
+            imageURL: '/Frutas-Verduras/NARANJA.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'PIÑA',
             description: 'Con ambas manos se flexiona el pulgar hacia el interior de la palma y el resto de los dedos se dejan extendidos de manera separada, una mano se muestra el dorso y la otra mano muestra la palma, con ambas manos se alternan movimientos de izquierda a derecha.',
-            imageURL: '/Frutas-Verduras/PIÑA.jpg',
+            imageURL: '/Frutas-Verduras/PIÑA.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'PLATANO',
             description: 'Con la mano base se simula sujetar un objeto, mientras que con la mano dominante se hace un movimiento simulando retirar la cáscara de un plátano.',
-            imageURL: '/Frutas-Verduras/PLATANO.jpg',
+            imageURL: '/Frutas-Verduras/PLATANO.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'UVA',
             description: 'Con la mano dominante y con los dedos del índice al meñique extendidos y juntos, se toca la frente.',
-            imageURL: '/Frutas-Verduras/UVA.jpg',
+            imageURL: '/Frutas-Verduras/UVA.png',
             class: 'Frutas-Verduras'
         },
         {
             name:'ZANAHORIA',
             description: 'Con la mano base simulando tomar un objeto se coloca frente a la boca abierta.',
-            imageURL: '/Frutas-Verduras/ZANAHORIA.jpg',
+            imageURL: '/Frutas-Verduras/ZANAHORIA.png',
             class: 'Frutas-Verduras'
         },
     ]

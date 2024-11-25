@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, SetMetadata, ParseUUIDPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUSerDto } from './dto/create-user.dto';
 import { LoginUSerDto } from './dto/login-user.dto';
@@ -11,6 +11,7 @@ import { UserRoleGuard } from './guards/user-role/user-role.guard';
 import { RoleProtected } from './decorators/role-protected.decorator';
 import { ValidRoles } from './interface/valid-roles';
 import { Auth } from './decorators/auth.decorator';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -26,16 +27,28 @@ export class AuthController {
     return this.authService.login(loginUserDto);
   }
 
+  @Patch(':id')
+  @Auth(ValidRoles.user)
+  updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() updateUserDto:UpdateUserDto){
+    return this.authService.update(id,updateUserDto);
+  }
+
+  @Get(':id')
+  @Auth(ValidRoles.user)
+  findUser(@Param('id', ParseUUIDPipe) id:string){
+    return this.authService.findUser(id)
+  }
 
   @Get('private3')
-  @Auth() //Para proteger la ruta se especifica el rol
+  @Auth(ValidRoles.guest) //Para proteger la ruta se especifica el rol
   privateRoute3(
-  @GetUser() user:User,
+    @GetUser() user:User,
   ){
     return {
       ok: true,
       user,
     }
   }
+
 
 }

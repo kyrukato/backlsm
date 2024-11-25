@@ -16,18 +16,16 @@ export class UserRoleGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const validRoles: string[] = this.reflector.get(META_ROLES,context.getHandler())
     if(!validRoles) return true;
-    if(validRoles.length === 0) return false;
+    if(validRoles.length === 0) return true;
     const req = context.switchToHttp().getRequest();
     const user = req.user as User;
 
     if(!user){
       throw new BadRequestException('User not found');
     }
-    for (const role of user.rol) {
-      if( validRoles.includes(role)){
-        return true
-      }
+    if(validRoles.includes(user.rol)){
+      return true;
     }
-    throw new ForbiddenException(`User ${user.name} need a valid role`)
+    throw new ForbiddenException(`User ${user.name} need a valid role`);
   }
 }
