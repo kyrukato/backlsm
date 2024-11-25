@@ -1,8 +1,14 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn('uuid')
+    /*@OneToOne(
+        () => GuessLocal,
+        (guessLocal) => guessLocal.idUser,
+        {onDelete: 'CASCADE'},
+    )*/
     id: string;
 
     @Column('text',{

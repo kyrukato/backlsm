@@ -21,7 +21,7 @@ export class SeedService {
     dictionarySignals.forEach(signal =>{
       insertPromises.push(this.dictionaryService.create(signal));
     });
-    await Promise.all(insertPromises);
+    insertPromises;
     return true;
   }
 

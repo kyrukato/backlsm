@@ -6,6 +6,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeedModule } from './seed/seed.module';
 import { DictionaryModule } from './dictionary/dictionary.module';
 import { AuthModule } from './auth/auth.module';
+import { MemoryLocalModule } from './games/local/memory-local/memory-local.module';
+import { SequenceLocalModule } from './games/local/sequence-local/sequence-local.module';
+import { GuessLocalModule } from './games/local/guess-local/guess-local.module';
+import { MemoryPvpModule } from './games/pvp/memory-pvp/memory-pvp.module';
+import { GuessPvpModule } from './games/pvp/guess-pvp/guess-pvp.module';
+import { SequencePvpModule } from './games/pvp/sequence-pvp/sequence-pvp.module';
 
 
 @Module({
@@ -20,6 +26,12 @@ import { AuthModule } from './auth/auth.module';
     SeedModule,
     DictionaryModule,
     AuthModule,
+    MemoryLocalModule,
+    SequenceLocalModule,
+    GuessLocalModule,
+    MemoryPvpModule,
+    GuessPvpModule,
+    SequencePvpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

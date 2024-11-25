@@ -9,7 +9,7 @@ interface seedData{
     dictionary: seedDictionary[],
 }
 
-export const initialData: seedData ={
+export const initialData: seedData = {
     dictionary: [
         {
             name:'A',
