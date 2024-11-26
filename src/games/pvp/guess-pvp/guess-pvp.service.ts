@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGuessPvpDto } from './dto/create-guess-pvp.dto';
 import { UpdateGuessPvpDto } from './dto/update-guess-pvp.dto';
+import { GuessPvp } from './entities/guess-pvp.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class GuessPvpService {
+
+  constructor(
+    @InjectRepository(GuessPvp)
+    private readonly guessPvpRepository: Repository<GuessPvp>
+  ){}
+
   create(createGuessPvpDto: CreateGuessPvpDto) {
-    return 'This action adds a new guessPvp';
+    this.guessPvpRepository.save(createGuessPvpDto);
   }
 
   findAll() {

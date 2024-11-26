@@ -12,6 +12,9 @@ import { isUUID } from 'class-validator';
 import { GuessLocalService } from 'src/games/local/guess-local/guess-local.service';
 import { MemoryLocalService } from 'src/games/local/memory-local/memory-local.service';
 import { SequenceLocalService } from 'src/games/local/sequence-local/sequence-local.service';
+import { GuessPvpService } from 'src/games/pvp/guess-pvp/guess-pvp.service';
+import { MemoryPvpService } from 'src/games/pvp/memory-pvp/memory-pvp.service';
+import { SequencePvpService } from 'src/games/pvp/sequence-pvp/sequence-pvp.service';
 
 
 @Injectable()
@@ -20,6 +23,9 @@ export class AuthService {
     private readonly guessService:GuessLocalService,
     private readonly memoryService:MemoryLocalService,
     private readonly sequenceService:SequenceLocalService,
+    private readonly guesspvpService:GuessPvpService,
+    private readonly memorypvpService: MemoryPvpService,
+    private readonly sequencepvpService: SequencePvpService,
     @InjectRepository(User)
     private readonly userRepository:Repository<User>,
     private readonly jwtService:JwtService,
@@ -36,7 +42,10 @@ export class AuthService {
       await this.userRepository.save(user);
       this.guessService.create({user});
       this.memoryService.create({user});
-      this.sequenceService.create({user})
+      this.sequenceService.create({user});
+      this.guesspvpService.create({user});
+      this.memorypvpService.create({user});
+      this.sequencepvpService.create({user});
       delete user.password; 
       delete user.rol;
       delete user.isActive;

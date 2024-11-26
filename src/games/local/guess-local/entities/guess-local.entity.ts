@@ -4,7 +4,17 @@ import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedCol
 @Entity()
 export class GuessLocal {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
+
+    @Column('int',{
+        default: 0
+    })
+    points: number;
+
+    @Column('int',{
+        default: 0
+    })
+    quantity: number;
 
     @ManyToOne(
         () => User,
@@ -12,15 +22,5 @@ export class GuessLocal {
         {onDelete: 'CASCADE'},
     )
     user:User;
-
-    @Column('int',{
-        default: 0,
-    })
-    sequenceRemembered: number;
-
-    @Column('int',{
-        default: 0,
-    })
-    points: number;
 
 }

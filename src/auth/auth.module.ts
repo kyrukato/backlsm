@@ -11,6 +11,9 @@ import { GuessLocalService } from 'src/games/local/guess-local/guess-local.servi
 import { GuessLocalModule } from 'src/games/local/guess-local/guess-local.module';
 import { MemoryLocalModule } from 'src/games/local/memory-local/memory-local.module';
 import { SequenceLocalModule } from 'src/games/local/sequence-local/sequence-local.module';
+import { GuessPvpModule } from 'src/games/pvp/guess-pvp/guess-pvp.module';
+import { MemoryPvpModule } from 'src/games/pvp/memory-pvp/memory-pvp.module';
+import { SequencePvpModule } from 'src/games/pvp/sequence-pvp/sequence-pvp.module';
 
 @Module({
   controllers: [AuthController],
@@ -20,6 +23,9 @@ import { SequenceLocalModule } from 'src/games/local/sequence-local/sequence-loc
     GuessLocalModule,
     MemoryLocalModule,
     SequenceLocalModule,
+    GuessPvpModule,
+    MemoryPvpModule,
+    SequencePvpModule,
     TypeOrmModule.forFeature([User]),
     PassportModule.register({defaultStrategy: 'jwt'}), //Definición de la estrategia como un JWT
     JwtModule.registerAsync({

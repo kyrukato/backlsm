@@ -2,13 +2,9 @@ import { User } from "src/auth/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class SequenceLocal {
+    
     @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column('int',{
-        default: 0
-    })
-    points: number;
+    id:number;
 
     @ManyToOne(
         () => User,
@@ -16,5 +12,15 @@ export class SequenceLocal {
         {onDelete: 'CASCADE'},
     )
     user:User;
+
+    @Column('int',{
+        default: 0,
+    })
+    sequenceRemembered: number;
+
+    @Column('int',{
+        default: 0,
+    })
+    points: number;
 
 }

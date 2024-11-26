@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMemoryPvpDto } from './dto/create-memory-pvp.dto';
 import { UpdateMemoryPvpDto } from './dto/update-memory-pvp.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MemoryPvp } from './entities/memory-pvp.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MemoryPvpService {
+
+  constructor(
+    @InjectRepository(MemoryPvp)
+    private readonly memoryPvpRepository: Repository<MemoryPvp>
+  ){}
+
   create(createMemoryPvpDto: CreateMemoryPvpDto) {
-    return 'This action adds a new memoryPvp';
+    this.memoryPvpRepository.save(createMemoryPvpDto);
   }
 
   findAll() {

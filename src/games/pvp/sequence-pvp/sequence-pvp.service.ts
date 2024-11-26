@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSequencePvpDto } from './dto/create-sequence-pvp.dto';
 import { UpdateSequencePvpDto } from './dto/update-sequence-pvp.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SequencePvp } from './entities/sequence-pvp.entity';
+import { privateDecrypt } from 'crypto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SequencePvpService {
+
+  constructor(
+    @InjectRepository(SequencePvp)
+    private readonly sequencePvpRepository: Repository<SequencePvp>,
+  ){}
+
   create(createSequencePvpDto: CreateSequencePvpDto) {
-    return 'This action adds a new sequencePvp';
+    this.sequencePvpRepository.save(createSequencePvpDto);
   }
 
   findAll() {
