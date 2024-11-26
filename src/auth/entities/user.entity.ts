@@ -1,14 +1,12 @@
 
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { GuessLocal } from "src/games/local/guess-local/entities/guess-local.entity";
+import { MemoryLocal } from "src/games/local/memory-local/entities/memory-local.entity";
+import { SequenceLocal } from "src/games/local/sequence-local/entities/sequence-local.entity";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    /*@OneToOne(
-        () => GuessLocal,
-        (guessLocal) => guessLocal.idUser,
-        {onDelete: 'CASCADE'},
-    )*/
     id: string;
 
     @Column('text',{
@@ -34,8 +32,28 @@ export class User {
     })
     rol: string;
 
-    @Column('text')
-    token: string;
+    @OneToMany(
+        () => GuessLocal,
+        (guessLocal) => guessLocal.user,
+        {onUpdate: 'CASCADE'},
+    )
+    guessLocal:GuessLocal[];
+
+    @OneToMany(
+        () => SequenceLocal,
+        (sequenceLocal) => sequenceLocal.user,
+        {onUpdate: 'CASCADE'},
+    )
+    sequenceLocal:SequenceLocal[];
+
+    @OneToMany(
+        () => MemoryLocal,
+        (memoryLocal) => memoryLocal.user,
+        {onUpdate: 'CASCADE'},
+    )
+    memoryLocal:MemoryLocal[];
+
+
 
     @BeforeInsert()
     checFieldBeforeInsert(){
@@ -46,4 +64,5 @@ export class User {
     checFieldBeforeUpdate(){
         this.checFieldBeforeInsert();
     }
+    
 }

@@ -1,23 +1,26 @@
 import { User } from "src/auth/entities/user.entity";
-import { Column, Entity, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class GuessLocal {
     @PrimaryGeneratedColumn()
     id:number;
 
-    /*@OneToOne(
+    @ManyToOne(
         () => User,
         (user) => user.id,
-        {cascade: true, eager:true},
-    )*/
-    @Column('text')
-    idUser:string;
+        {onDelete: 'CASCADE'},
+    )
+    user:User;
 
-    @Column('int')
+    @Column('int',{
+        default: 0,
+    })
     sequenceRemembered: number;
 
-    @Column('int')
+    @Column('int',{
+        default: 0,
+    })
     points: number;
 
 }

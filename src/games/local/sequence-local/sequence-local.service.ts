@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSequenceLocalDto } from './dto/create-sequence-local.dto';
 import { UpdateSequenceLocalDto } from './dto/update-sequence-local.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SequenceLocal } from './entities/sequence-local.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SequenceLocalService {
+
+  constructor(
+    @InjectRepository(SequenceLocal)
+    private readonly sequenceLocalRepository: Repository<SequenceLocal>
+  ){}
+
   create(createSequenceLocalDto: CreateSequenceLocalDto) {
-    return 'This action adds a new sequenceLocal';
+    this.sequenceLocalRepository.save(createSequenceLocalDto);
   }
 
   findAll() {

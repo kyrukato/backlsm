@@ -378,12 +378,6 @@ export const initialData: seedData = {
             class: 'Colores'
         },
         {
-            name:'NARANJA',
-            description: 'Con la mano dominante cerca de la cara a la altura de los ojos, se hace un movimiento donde se flexionan los dedos hacia el interior formando un puño.',
-            imageURL: '/Colores/NARANJA.png',
-            class: 'Colores'
-        },
-        {
             name:'NEGRO',
             description: 'Con la mano base extendida hacia el frente y con la palma hacia arriba se extienden los dedos y se coloca sobre ella la mano dominante que tiene los dedos anular, meñique y pulgar flexionados hacia la palma y los dedos índice y medio están extendidos y juntos, se hace un movimiento hacia atras y hacia adelante con la mano dominante sobre la mano base.',
             imageURL: '/Colores/NEGRO.png',

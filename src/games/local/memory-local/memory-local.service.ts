@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMemoryLocalDto } from './dto/create-memory-local.dto';
 import { UpdateMemoryLocalDto } from './dto/update-memory-local.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MemoryLocal } from './entities/memory-local.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MemoryLocalService {
+
+  constructor(
+    @InjectRepository(MemoryLocal)
+    private readonly memoryLocalRepository: Repository<MemoryLocal>
+  ){}
+
   create(createMemoryLocalDto: CreateMemoryLocalDto) {
-    return 'This action adds a new memoryLocal';
+    this.memoryLocalRepository.save(createMemoryLocalDto);
   }
 
   findAll() {
