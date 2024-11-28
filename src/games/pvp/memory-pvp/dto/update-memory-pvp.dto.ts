@@ -1,4 +1,12 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateMemoryPvpDto } from './create-memory-pvp.dto';
+import { IsJWT, IsNumber, IsPositive, IsString, IsUUID } from "class-validator";
 
-export class UpdateMemoryPvpDto extends PartialType(CreateMemoryPvpDto) {}
+export class UpdateMemoryPvpDto {
+    @IsNumber()
+    @IsPositive()
+    victorys: number;
+
+    @IsUUID()
+    @IsString()
+    userID: string;
+
+}

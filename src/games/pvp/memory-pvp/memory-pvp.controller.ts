@@ -14,17 +14,17 @@ export class MemoryPvpController {
 
   @Get()
   findAll() {
-    return this.memoryPvpService.findAll();
+    return this.memoryPvpService.findTopTen();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.memoryPvpService.findOne(+id);
+    return this.memoryPvpService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMemoryPvpDto: UpdateMemoryPvpDto) {
-    return this.memoryPvpService.update(+id, updateMemoryPvpDto);
+  @Patch('update')
+  update(@Body() updateMemoryPvpDto: UpdateMemoryPvpDto) {
+    return this.memoryPvpService.update(updateMemoryPvpDto);
   }
 
   @Delete(':id')

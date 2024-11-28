@@ -1,14 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateMemoryPvpDto } from './dto/create-memory-pvp.dto';
 import { UpdateMemoryPvpDto } from './dto/update-memory-pvp.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MemoryPvp } from './entities/memory-pvp.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
 export class MemoryPvpService {
 
   constructor(
+    private readonly dataSource:DataSource,
     @InjectRepository(MemoryPvp)
     private readonly memoryPvpRepository: Repository<MemoryPvp>
   ){}
@@ -17,19 +18,67 @@ export class MemoryPvpService {
     this.memoryPvpRepository.save(createMemoryPvpDto);
   }
 
-  findAll() {
-    return `This action returns all memoryPvp`;
+  async findTopTen() {
+    const ranking = await this.memoryPvpRepository.find({
+      take: 10,
+      skip: 0,
+      order: {victorys: 'DESC'},
+      relations: {user:true},
+    });
+    return ranking.map( (rank) => ({
+      ...rank,
+      user: rank.user.name
+    }));
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} memoryPvp`;
+  async findOne(idUser: string) {
+    try {
+      return await this.memoryPvpRepository.findOneBy({
+        user: {id: idUser}
+      })
+    } catch (error) {
+      this.handleDBErrors(error);
+    } 
   }
 
-  update(id: number, updateMemoryPvpDto: UpdateMemoryPvpDto) {
-    return `This action updates a #${id} memoryPvp`;
+  async update(updateMemoryPvpDto: UpdateMemoryPvpDto) {
+    const {userID, ...toupdate} = updateMemoryPvpDto;
+    const MemoryPvp = await this.memoryPvpRepository.findOneBy({
+      user: {id: userID}
+    });
+    if(!MemoryPvp){
+      throw new NotFoundException(`El usuario no fue encontrado`)
+    }
+    const updateMemoryPvp = await this.memoryPvpRepository.preload({
+      id: MemoryPvp.id,
+      user: {id: userID},
+      ...toupdate
+    })
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      await queryRunner.manager.save(updateMemoryPvp);
+      await queryRunner.commitTransaction()
+      await queryRunner.release()
+      delete updateMemoryPvp.user;
+      return updateMemoryPvp;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      this.handleDBErrors(error);
+    }
   }
 
   remove(id: number) {
     return `This action removes a #${id} memoryPvp`;
+  }
+
+  private handleDBErrors(error:any){
+    if(error.code === '23505'){
+      throw new BadRequestException(error.detail);
+    }
+    console.log(error);
+    throw new InternalServerErrorException('Please check serverlogs');
   }
 }

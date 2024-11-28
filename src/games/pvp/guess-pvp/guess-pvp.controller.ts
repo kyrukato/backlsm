@@ -14,20 +14,20 @@ export class GuessPvpController {
 
   @Get()
   findAll() {
-    return this.guessPvpService.findAll();
+    return this.guessPvpService.findTopTen();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.guessPvpService.findOne(+id);
+    return this.guessPvpService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGuessPvpDto: UpdateGuessPvpDto) {
-    return this.guessPvpService.update(+id, updateGuessPvpDto);
+  @Patch('update')
+  update(@Body() updateGuessPvpDto: UpdateGuessPvpDto) {
+    return this.guessPvpService.update( updateGuessPvpDto);
   }
 
-  @Delete(':id')
+  @Delete('')
   remove(@Param('id') id: string) {
     return this.guessPvpService.remove(+id);
   }

@@ -1,4 +1,16 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateSequenceLocalDto } from './create-sequence-local.dto';
+import { IsJWT, IsNumber, IsPositive, IsString, IsUUID } from "class-validator";
 
-export class UpdateSequenceLocalDto extends PartialType(CreateSequenceLocalDto) {}
+export class UpdateSequenceLocalDto{
+    @IsNumber()
+    @IsPositive()
+    points: number;
+
+    @IsNumber()
+    @IsPositive()
+    sequenceRemembered:number;
+
+    @IsUUID()
+    @IsString()
+    userID: string;
+
+}

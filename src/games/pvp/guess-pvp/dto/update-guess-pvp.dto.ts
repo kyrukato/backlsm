@@ -1,4 +1,20 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateGuessPvpDto } from './create-guess-pvp.dto';
+import { IsJWT, IsNumber, IsPositive, IsString, IsUUID } from "class-validator";
 
-export class UpdateGuessPvpDto extends PartialType(CreateGuessPvpDto) {}
+export class UpdateGuessPvpDto {
+    @IsNumber()
+    @IsPositive()
+    points: number;
+
+    @IsNumber()
+    @IsPositive()
+    victory: number;
+
+    @IsNumber()
+    @IsPositive()
+    quantity:number;
+
+    @IsUUID()
+    @IsString()
+    userID: string;
+
+}

@@ -12,23 +12,14 @@ export class MemoryLocalController {
     return this.memoryLocalService.create(createMemoryLocalDto);
   }
 
-  @Get()
-  findAll() {
-    return this.memoryLocalService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.memoryLocalService.findOne(+id);
+    return this.memoryLocalService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMemoryLocalDto: UpdateMemoryLocalDto) {
-    return this.memoryLocalService.update(+id, updateMemoryLocalDto);
+  @Patch('update')
+  update(@Body() updateMemoryLocalDto: UpdateMemoryLocalDto) {
+    return this.memoryLocalService.update(updateMemoryLocalDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.memoryLocalService.remove(+id);
-  }
 }

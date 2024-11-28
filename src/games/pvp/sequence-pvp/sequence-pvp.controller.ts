@@ -12,19 +12,14 @@ export class SequencePvpController {
     return this.sequencePvpService.create(createSequencePvpDto);
   }
 
-  @Get()
-  findAll() {
-    return this.sequencePvpService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.sequencePvpService.findOne(+id);
+    return this.sequencePvpService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSequencePvpDto: UpdateSequencePvpDto) {
-    return this.sequencePvpService.update(+id, updateSequencePvpDto);
+  @Patch('update')
+  update(@Body() updateSequencePvpDto: UpdateSequencePvpDto) {
+    return this.sequencePvpService.update(updateSequencePvpDto);
   }
 
   @Delete(':id')

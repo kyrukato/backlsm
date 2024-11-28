@@ -4,7 +4,6 @@ import { User } from './entities/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import  * as bcrypt  from 'bcrypt' //Librería para encriptar las contraseñas
-import { JwtPayload } from './interface/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUSerDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -15,6 +14,7 @@ import { SequenceLocalService } from 'src/games/local/sequence-local/sequence-lo
 import { GuessPvpService } from 'src/games/pvp/guess-pvp/guess-pvp.service';
 import { MemoryPvpService } from 'src/games/pvp/memory-pvp/memory-pvp.service';
 import { SequencePvpService } from 'src/games/pvp/sequence-pvp/sequence-pvp.service';
+import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
 
 
 @Injectable()

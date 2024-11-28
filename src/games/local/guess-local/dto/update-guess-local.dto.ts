@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateGuessLocalDto } from './create-guess-local.dto';
+import { IsJWT, IsNumber, IsPositive, IsString, IsUUID } from 'class-validator';
 
-export class UpdateGuessLocalDto extends PartialType(CreateGuessLocalDto) {}
+export class UpdateGuessLocalDto {
+    @IsNumber()
+    @IsPositive()
+    points: number;
+
+    @IsNumber()
+    @IsPositive()
+    quantity:number;
+
+    @IsUUID()
+    @IsString()
+    userID: string;
+}

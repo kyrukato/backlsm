@@ -1,4 +1,12 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateMemoryLocalDto } from './create-memory-local.dto';
+import { IsJWT, IsNumber, IsPositive, IsString, IsUUID } from "class-validator";
 
-export class UpdateMemoryLocalDto extends PartialType(CreateMemoryLocalDto) {}
+export class UpdateMemoryLocalDto {
+    @IsNumber()
+    @IsPositive()
+    points: number;
+
+    @IsUUID()
+    @IsString()
+    userID: string;
+
+}

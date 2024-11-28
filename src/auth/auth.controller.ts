@@ -2,16 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, SetM
 import { AuthService } from './auth.service';
 import { CreateUSerDto } from './dto/create-user.dto';
 import { LoginUSerDto } from './dto/login-user.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from './decorators/get-user.decorator';
 import { User } from './entities/user.entity';
-import { RawHeaders } from './decorators/raw-headers.decorator';
-import { getuid } from 'process';
-import { UserRoleGuard } from './guards/user-role/user-role.guard';
-import { RoleProtected } from './decorators/role-protected.decorator';
-import { ValidRoles } from './interface/valid-roles';
-import { Auth } from './decorators/auth.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ValidRoles } from 'src/common/interface/valid-roles';
+import { Auth } from 'src/common/decorators/auth.decorator.ts.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -39,7 +33,7 @@ export class AuthController {
     return this.authService.findUser(id)
   }
 
-  @Get('private3')
+  /*@Get('private3')
   @Auth(ValidRoles.guest) //Para proteger la ruta se especifica el rol
   privateRoute3(
     @GetUser() user:User,
@@ -48,7 +42,7 @@ export class AuthController {
       ok: true,
       user,
     }
-  }
+  }*/
 
 
 }

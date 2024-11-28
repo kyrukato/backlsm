@@ -12,23 +12,14 @@ export class SequenceLocalController {
     return this.sequenceLocalService.create(createSequenceLocalDto);
   }
 
-  @Get()
-  findAll() {
-    return this.sequenceLocalService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.sequenceLocalService.findOne(+id);
+    return this.sequenceLocalService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSequenceLocalDto: UpdateSequenceLocalDto) {
-    return this.sequenceLocalService.update(+id, updateSequenceLocalDto);
+  @Patch('update')
+  update(@Body() updateSequenceLocalDto: UpdateSequenceLocalDto) {
+    return this.sequenceLocalService.update( updateSequenceLocalDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.sequenceLocalService.remove(+id);
-  }
 }

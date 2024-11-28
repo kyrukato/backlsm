@@ -1,8 +1,8 @@
 import { applyDecorators, SetMetadata, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { ValidRoles } from "../interface/valid-roles";
-import { RoleProtected } from "./role-protected.decorator";
-import { UserRoleGuard } from "../guards/user-role/user-role.guard";
+import { RoleProtected } from "src/common/decorators/role-protected.decorator";
+import { UserRoleGuard } from "src/common/guards/user-role/user-role.guard";
+import { ValidRoles } from "src/common/interface/valid-roles";
 
 export function Auth(...rol: ValidRoles[]){
     return applyDecorators(

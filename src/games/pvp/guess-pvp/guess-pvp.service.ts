@@ -1,14 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateGuessPvpDto } from './dto/create-guess-pvp.dto';
 import { UpdateGuessPvpDto } from './dto/update-guess-pvp.dto';
 import { GuessPvp } from './entities/guess-pvp.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class GuessPvpService {
 
   constructor(
+    private readonly dataSource:DataSource,
     @InjectRepository(GuessPvp)
     private readonly guessPvpRepository: Repository<GuessPvp>
   ){}
@@ -17,19 +18,67 @@ export class GuessPvpService {
     this.guessPvpRepository.save(createGuessPvpDto);
   }
 
-  findAll() {
-    return `This action returns all guessPvp`;
+  async findTopTen() {
+    const ranking = await this.guessPvpRepository.find({
+      take: 10,
+      skip: 0,
+      order: {points: 'DESC'},
+      relations: {user:true},
+    });
+    return ranking.map( (rank) => ({
+      ...rank,
+      user: rank.user.name
+    }));
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} guessPvp`;
+  async findOne(idUser: string) {
+    try {
+      return await this.guessPvpRepository.findOneBy({
+        user: {id: idUser}
+      })
+    } catch (error) {
+      this.handleDBErrors(error);
+    } 
   }
 
-  update(id: number, updateGuessPvpDto: UpdateGuessPvpDto) {
-    return `This action updates a #${id} guessPvp`;
+  async update( updateGuessPvpDto: UpdateGuessPvpDto) {
+    const {userID, ...toupdate} = updateGuessPvpDto;
+    const guessPvp = await this.guessPvpRepository.findOneBy({
+      user: {id: userID}
+    });
+    if(!guessPvp){
+      throw new NotFoundException(`El usuario no fue encontrado`)
+    }
+    const updateguessPvp = await this.guessPvpRepository.preload({
+      id: guessPvp.id,
+      user: {id: userID},
+      ...toupdate
+    })
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      await queryRunner.manager.save(updateguessPvp);
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
+      delete updateguessPvp.user;
+      return updateguessPvp;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      this.handleDBErrors(error);
+    }
   }
 
   remove(id: number) {
     return `This action removes a #${id} guessPvp`;
+  }
+
+  private handleDBErrors(error:any){
+    if(error.code === '23505'){
+      throw new BadRequestException(error.detail);
+    }
+    console.log(error);
+    throw new InternalServerErrorException('Please check serverlogs');
   }
 }
