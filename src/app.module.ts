@@ -13,6 +13,7 @@ import { MemoryPvpModule } from './games/pvp/memory-pvp/memory-pvp.module';
 import { GuessPvpModule } from './games/pvp/guess-pvp/guess-pvp.module';
 import { SequencePvpModule } from './games/pvp/sequence-pvp/sequence-pvp.module';
 import { CommonModule } from './common/common.module';
+import { WebsocketsModule } from './websockets/websockets.module';
 
 
 @Module({
@@ -34,6 +35,7 @@ import { CommonModule } from './common/common.module';
     GuessPvpModule,
     SequencePvpModule,
     CommonModule,
+    WebsocketsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
