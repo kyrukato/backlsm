@@ -25,13 +25,14 @@ export class WebsocketsService {
     }
 
     crearSala(socket:Socket, args:CrearSalaDto , callback: Function){
+        console.log('Creando salaa');
         const nuevaSala = new Sala(args,socket,this.server);
         nuevaSala.id = this.idProximaSala;
         this.idProximaSala++;
         this.salas.push(nuevaSala);
         this.unirseASala(socket,callback,{
             id: nuevaSala.id,
-            nombreJugador: args.nombreJugador
+            nombreJugador: args.userID
         });
     }
     unirseASala(socket:Socket, callback: Function, args:UnirseSalaDto){
