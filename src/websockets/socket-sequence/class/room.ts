@@ -13,10 +13,12 @@ export class Sala{
     id:number;
     socket:Socket;
     estado:RoomStatus = "ESPERANDO_JUGADOR";
-    imageURL: string = "";
-    signal: string = '';
+    imageURL: string[]= [];
+    signal: string[] = [];
     respuesta1: statusRespuesta = 'ESPERANDO_RESPUESTA';
     respuesta2: statusRespuesta = 'ESPERANDO_RESPUESTA';
+    secuenciaP1: number = 0;
+    secuenciaP2: number = 0;
     private readonly dictionaryService:DictionaryService;
     private io:Server;
     constructor(args:CreateRoomDto,socket:Socket,io:Server, dictionaryService:DictionaryService){
@@ -35,9 +37,11 @@ export class Sala{
         this.jugadores[indiceJugador].name = nombre;
         if(this.jugadores[1].name){
             this.estado = 'JUGAR';
-            const data =  await this.dictionaryService.findSignal(this.señalRandom());
-            this.imageURL = data[0].imageURL;
-            this.signal = data[0].name;
+            for (let i = 0; i < 3; i++) {
+                const data =  await this.dictionaryService.findSignal(this.señalRandom());
+                this.imageURL.push(data[0].imageURL);
+                this.signal.push(data[0].name);
+            }
         }
         this.comunicarSalas();
     }
@@ -64,12 +68,14 @@ export class Sala{
         this.comunicarSalas();
     }
 
-    jugar(numeroJugador:1|2, respuesta:statusRespuesta){
+    jugar(numeroJugador:1|2, respuesta:statusRespuesta, secuenciaRecordada:number){
         if(numeroJugador === 1){
             this.respuesta1 = respuesta;
+            this.secuenciaP1 = secuenciaRecordada;
         }
         if(numeroJugador === 2){
             this.respuesta2 = respuesta;
+            this.secuenciaP2 = secuenciaRecordada;
         }
         this.verificarVictoria();
     }
@@ -83,11 +89,20 @@ export class Sala{
         }
         if(this.respuesta1 === 'CORRECTA' && this.respuesta2 === 'CORRECTA'){
             const data =  await this.dictionaryService.findSignal(this.señalRandom());
-            this.imageURL = data[0].imageURL;
-            this.signal = data[0].name;
+            for (let i = 0; i < 2; i++) {
+                const data =  await this.dictionaryService.findSignal(this.señalRandom());
+                this.imageURL.push(data[0].imageURL);
+                this.signal.push(data[0].name);
+            }
         }
         if((this.respuesta1 !== 'CORRECTA' && this.respuesta2 !== 'CORRECTA')){
-            this.estado = 'EMPATE';
+            if(this.secuenciaP1 > this.secuenciaP2){
+                this.estado = 'VICTORIA_P1';
+            }else if(this.secuenciaP1 < this.secuenciaP2){
+                this.estado = 'VICTORIA_P2';
+            }else{
+                this.estado = 'EMPATE';
+            }
         }
         this.respuesta1 = 'ESPERANDO_RESPUESTA';
         this.respuesta2 = 'ESPERANDO_RESPUESTA';

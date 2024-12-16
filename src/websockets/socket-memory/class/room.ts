@@ -89,8 +89,6 @@ export class Sala{
         if((this.respuesta1 !== 'CORRECTA' && this.respuesta2 !== 'CORRECTA')){
             this.estado = 'EMPATE';
         }
-        this.respuesta1 = 'ESPERANDO_RESPUESTA';
-        this.respuesta2 = 'ESPERANDO_RESPUESTA';
         this.comunicarSalas();
     }
 }

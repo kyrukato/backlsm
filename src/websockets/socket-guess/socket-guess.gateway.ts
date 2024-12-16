@@ -2,7 +2,7 @@ import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketSe
 import { SocketGuessService } from './socket-guess.service';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway({cors: true})
+@WebSocketGateway({cors: true, namespace:'guess'})
 export class SocketGuessGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server
   constructor(private readonly socketGuessService: SocketGuessService) {}
