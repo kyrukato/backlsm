@@ -31,6 +31,15 @@ export class DictionaryService {
       return products;
   }
 
+  async findSignal(id:number){
+    const products = await this.dictionaryRepository.find({
+      where: {
+        id: id,
+      }
+    });
+    return products;
+  }
+
 
   async deleteAll(){
     const query = this.dictionaryRepository.createQueryBuilder('dictionary');
