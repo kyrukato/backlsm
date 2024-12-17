@@ -1,9 +1,16 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, Optional, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  Optional,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUSerDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import  * as bcrypt  from 'bcrypt' //Librería para encriptar las contraseñas
+import * as bcrypt from 'bcrypt'; //Librería para encriptar las contraseñas
 import { JwtService } from '@nestjs/jwt';
 import { LoginUSerDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -16,41 +23,41 @@ import { MemoryPvpService } from 'src/games/pvp/memory-pvp/memory-pvp.service';
 import { SequencePvpService } from 'src/games/pvp/sequence-pvp/sequence-pvp.service';
 import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
 
-
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly guessService:GuessLocalService,
-    private readonly memoryService:MemoryLocalService,
-    private readonly sequenceService:SequenceLocalService,
-    private readonly guesspvpService:GuessPvpService,
+    private readonly guessService: GuessLocalService,
+    private readonly memoryService: MemoryLocalService,
+    private readonly sequenceService: SequenceLocalService,
+    private readonly guesspvpService: GuessPvpService,
     private readonly memorypvpService: MemoryPvpService,
     private readonly sequencepvpService: SequencePvpService,
     @InjectRepository(User)
-    private readonly userRepository:Repository<User>,
-    private readonly jwtService:JwtService,
-    private readonly dataSource:DataSource,
-  ){}
+    private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
+    private readonly dataSource: DataSource,
+  ) {}
 
-  async create(createUserDto:CreateUSerDto) {
+  async create(createUserDto: CreateUSerDto) {
+    console.log('createUserDto', createUserDto);
     try {
-      const { password, ...userData} = createUserDto;
+      const { password, ...userData } = createUserDto;
       const user = this.userRepository.create({
         ...userData,
-        password: bcrypt.hashSync(password, 10)
+        password: bcrypt.hashSync(password, 10),
       });
       await this.userRepository.save(user);
-      this.guessService.create({user});
-      this.memoryService.create({user});
-      this.sequenceService.create({user});
-      this.guesspvpService.create({user});
-      this.memorypvpService.create({user});
-      this.sequencepvpService.create({user});
-      delete user.password; 
+      this.guessService.create({ user });
+      this.memoryService.create({ user });
+      this.sequenceService.create({ user });
+      this.guesspvpService.create({ user });
+      this.memorypvpService.create({ user });
+      this.sequencepvpService.create({ user });
+      delete user.password;
       delete user.rol;
       delete user.isActive;
-      const token = this.getJWToken({id: user.id});
-      console.log("ID ",user.id) 
+      const token = this.getJWToken({ id: user.id });
+      console.log('ID ', user.id);
       return {
         ...user,
         token: token,
@@ -60,23 +67,24 @@ export class AuthService {
     }
   }
 
-  async login(loginUserDto:LoginUSerDto){
+  async login(loginUserDto: LoginUSerDto) {
+    console.log('loginUserDto', loginUserDto);
     try {
-      const {password, email} = loginUserDto;
+      const { password, email } = loginUserDto;
       const user = await this.userRepository.findOne({
         where: { email },
-        select: { email: true, password: true, id:true},
+        select: { email: true, password: true, id: true },
       });
-      if(!user){
+      if (!user) {
         throw new UnauthorizedException('Credentials are not valid (email)');
       }
-      if(!bcrypt.compareSync(password, user.password)){
+      if (!bcrypt.compareSync(password, user.password)) {
         throw new UnauthorizedException('Credentials are not valid (password)');
       }
       delete user.password;
       return {
         ...user,
-        token: this.getJWToken({id: user.id}), //Crear el JWT
+        token: this.getJWToken({ id: user.id }), //Crear el JWT
       };
     } catch (error) {
       this.handleDBErrors(error);
@@ -86,9 +94,9 @@ export class AuthService {
   async update(id: string, updateUserDto: UpdateUserDto) {
     const toupdate = updateUserDto;
 
-    const user = await this.userRepository.preload({id, ...toupdate });
-    if(!user){
-      throw new NotFoundException(`user with id: ${id} not found`)
+    const user = await this.userRepository.preload({ id, ...toupdate });
+    if (!user) {
+      throw new NotFoundException(`user with id: ${id} not found`);
     }
 
     //Nos ayuda a que cuando se realicen varias operaciones en la BD si una falla regresa al estado original
@@ -107,32 +115,30 @@ export class AuthService {
     } catch (error) {
       //En caso de que falle alguna de las transacciones se hace el RollBack y se restaura la BD
       await queryRunner.rollbackTransaction();
-      await queryRunner.release()
+      await queryRunner.release();
       this.handleDBErrors(error);
     }
   }
 
   async findUser(term: string) {
-    let user:User;
-    if( isUUID(term)){
-      user = await this.userRepository.findOneBy({id: term});
+    let user: User;
+    if (isUUID(term)) {
+      user = await this.userRepository.findOneBy({ id: term });
     }
-    if(!user){
-      throw new NotFoundException(`User with ${term} not found`)
+    if (!user) {
+      throw new NotFoundException(`User with ${term} not found`);
     }
     return user;
   }
 
-
-
   //Crear el JWT
-  private getJWToken(payload:JwtPayload){
+  private getJWToken(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
     return token;
   }
 
-  private handleDBErrors(error:any){
-    if(error.code === '23505'){
+  private handleDBErrors(error: any) {
+    if (error.code === '23505') {
       throw new BadRequestException(error.detail);
     }
     console.log(error);

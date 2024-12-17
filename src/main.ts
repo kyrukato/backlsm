@@ -6,17 +6,19 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-        .setTitle("API Documentation")
-        .setDescription("Documentación de endpoints para la API del sistema web interactivo para el aprendizade de LSM")
-        .setVersion("1.0")
-        .addBearerAuth()
-        .build();
-  const document = SwaggerModule.createDocument(app,config);
-  SwaggerModule.setup('api',app,document);
+    .setTitle('API Documentation')
+    .setDescription(
+      'Documentación de endpoints para la API del sistema web interactivo para el aprendizade de LSM',
+    )
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist:true,
-      forbidNonWhitelisted:true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
     }),
   );
   app.enableCors();
