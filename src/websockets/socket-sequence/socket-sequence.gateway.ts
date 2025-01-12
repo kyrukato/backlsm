@@ -1,20 +1,32 @@
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { SocketSequenceService } from './socket-sequence.service';
 import { Server, Socket } from 'socket.io';
+import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
+import { JwtService } from '@nestjs/jwt';
 
-@WebSocketGateway({cors: true})
+@WebSocketGateway({cors: true, namespace:'sequence'})
 export class SocketSequenceGateway implements OnGatewayConnection, OnGatewayDisconnect{
   @WebSocketServer() server: Server
-    constructor(private readonly socketSequenceService: SocketSequenceService) {}
-    
-    
-    
+    constructor(
+      private readonly socketSequenceService: SocketSequenceService,
+          private readonly jwtService: JwtService
+      ) {}
       afterInit(){
         this.socketSequenceService.setServer(this.server);
       }
     
       handleConnection(client: Socket) {
-        console.log("Nueva conexión: ");
+        const token = client.handshake.headers.authentication as string;
+            let payload: JwtPayload;
+            try {
+              console.log('Verificando token');
+              payload = this.jwtService.verify(token);
+              this.socketSequenceService.verifyClient(client,payload.id);
+            } catch (error) {
+              client.disconnect();
+              return;
+            }
+        console.log("Nueva conexión: secuencia");
         /*client.emit('Mensaje desde el back');
         client.on('mensaje-custom',() => console.log('Recibí un mensaje custom '))*/
         client.on('encontrarSala',(callback) => this.socketSequenceService.buscarSalaPublica(callback))
@@ -26,7 +38,7 @@ export class SocketSequenceGateway implements OnGatewayConnection, OnGatewayDisc
         client.on('disconect',() => this.socketSequenceService.clienteDesconectado(client))
       }
     
-      handleDisconnect(client: any) {
+      handleDisconnect(client: Socket) {
         this.socketSequenceService.clienteDesconectado(client);
       }
 }

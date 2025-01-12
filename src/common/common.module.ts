@@ -26,6 +26,6 @@ import { User } from 'src/auth/entities/user.entity';
       }
     })
   ],
-  exports: [JwtStrategy, PassportModule, JwtModule],
+  exports: [JwtStrategy, PassportModule, JwtModule, TypeOrmModule],
 })
 export class CommonModule {}

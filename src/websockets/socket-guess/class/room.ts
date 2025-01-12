@@ -7,7 +7,8 @@ import { DictionaryService } from "src/dictionary/dictionary.service";
 import { sign } from "crypto";
 
 export class Sala{
-    numeroSeñas = 50;
+    numeroSeñasMax = 96;
+    numeroSeñasMin = 1;
     publica: boolean;
     jugadores: [Player,Player] = [{...EmptyPlayer},{...EmptyPlayer}];
     id:number;
@@ -27,7 +28,7 @@ export class Sala{
     }
 
     señalRandom():number{
-        return Math.floor(Math.random() * (this.numeroSeñas - 2) + 1);
+        return Math.floor(Math.random() * (this.numeroSeñasMax - this.numeroSeñasMin + 1) + 1);
     }
 
     async agregarJugador(nombre:string){

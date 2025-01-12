@@ -7,6 +7,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Dictionary } from 'src/dictionary/entities/dictionary.entity';
 import { Repository } from 'typeorm';
 import { DictionaryService } from 'src/dictionary/dictionary.service';
+import { User } from 'src/auth/entities/user.entity';
+import { error } from 'console';
+import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
+
 
 @Injectable()
 export class SocketGuessService {
@@ -16,11 +20,18 @@ export class SocketGuessService {
     private server:Server;
 
     constructor(
-        private readonly dictionaryService:DictionaryService
+        private readonly dictionaryService:DictionaryService,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>
     ){}
 
     setServer(server:Server){
         this.server = server;
+    }
+
+    async verifyClient(client:Socket,userID:string){
+        const user = await this.userRepository.findOneBy({id:userID});
+        if(!user || !user.isActive || (user.rol === 'guest')) client.disconnect();
     }
 
     /**Busca una sala disponible, si la encuentra devuelve el ID de la sala, sino devuelve null */

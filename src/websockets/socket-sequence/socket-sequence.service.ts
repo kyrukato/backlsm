@@ -4,6 +4,9 @@ import { Server, Socket } from 'socket.io';
 import { DictionaryService } from 'src/dictionary/dictionary.service';
 import { CreateRoomDto } from './dto/createRoom.dto';
 import { JoinRoomDto } from './dto/joinRoom.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/auth/entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SocketSequenceService {
@@ -12,11 +15,18 @@ export class SocketSequenceService {
     private server:Server;
         
     constructor(
-        private readonly dictionaryService:DictionaryService
+        private readonly dictionaryService:DictionaryService,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>
     ){}
         
     setServer(server:Server){
         this.server = server;
+    }
+
+    async verifyClient(client:Socket,userID:string){
+        const user = await this.userRepository.findOneBy({id:userID});
+        if(!user || !user.isActive || (user.rol === 'guest')) client.disconnect();
     }
         
     /**Busca una sala disponible, si la encuentra devuelve el ID de la sala, sino devuelve null */
