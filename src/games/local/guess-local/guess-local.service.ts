@@ -1,26 +1,66 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateGuessLocalDto } from './dto/create-guess-local.dto';
 import { UpdateGuessLocalDto } from './dto/update-guess-local.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
+import { GuessLocal } from './entities/guess-local.entity';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class GuessLocalService {
-  create(createGuessLocalDto: CreateGuessLocalDto) {
-    return 'This action adds a new guessLocal';
+
+  constructor(
+    private readonly dataSource: DataSource,
+    @InjectRepository(GuessLocal)
+    private readonly guessLocalRepository: Repository<GuessLocal>
+  ){}
+
+  async create(createGuessLocalDto: CreateGuessLocalDto) {
+    this.guessLocalRepository.save(createGuessLocalDto);
   }
 
-  findAll() {
-    return `This action returns all guessLocal`;
+  async findOne(idUser: string) {
+    try {
+      return await this.guessLocalRepository.findOneBy({
+        user: {id: idUser}
+      })
+    } catch (error) {
+      this.handleDBErrors(error);
+    } 
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} guessLocal`;
+  async update(updateGuessLocalDto: UpdateGuessLocalDto) {
+    const {userID, ...toupdate} = updateGuessLocalDto;
+    const guesslocal = this.findOne(userID);
+    if(!guesslocal){
+      throw new NotFoundException(`El usuario no fue encontrado`)
+    }
+    const updateguesslocal = await this.guessLocalRepository.preload({
+      id: (await guesslocal).id,
+      user: {id: userID},
+      ...toupdate,
+    })
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      await queryRunner.manager.save(updateguesslocal);
+      await queryRunner.commitTransaction()
+      await queryRunner.release()
+      delete updateguesslocal.user;
+      return updateguesslocal;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      this.handleDBErrors(error);
+    }
   }
 
-  update(id: number, updateGuessLocalDto: UpdateGuessLocalDto) {
-    return `This action updates a #${id} guessLocal`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} guessLocal`;
+  private handleDBErrors(error:any){
+    if(error.code === '23505'){
+      throw new BadRequestException(error.detail);
+    }
+    console.log(error);
+    throw new InternalServerErrorException('Please check serverlogs');
   }
 }

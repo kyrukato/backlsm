@@ -1,23 +1,37 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, Optional, UnauthorizedException } from '@nestjs/common';
 import { CreateUSerDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import  * as bcrypt  from 'bcrypt' //Librería para encriptar las contraseñas
-import { JwtPayload } from './interface/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUSerDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { isUUID } from 'class-validator';
+import { GuessLocalService } from 'src/games/local/guess-local/guess-local.service';
+import { MemoryLocalService } from 'src/games/local/memory-local/memory-local.service';
+import { SequenceLocalService } from 'src/games/local/sequence-local/sequence-local.service';
+import { GuessPvpService } from 'src/games/pvp/guess-pvp/guess-pvp.service';
+import { MemoryPvpService } from 'src/games/pvp/memory-pvp/memory-pvp.service';
+import { SequencePvpService } from 'src/games/pvp/sequence-pvp/sequence-pvp.service';
+import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
+
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly guessService:GuessLocalService,
+    private readonly memoryService:MemoryLocalService,
+    private readonly sequenceService:SequenceLocalService,
+    private readonly guesspvpService:GuessPvpService,
+    private readonly memorypvpService: MemoryPvpService,
+    private readonly sequencepvpService: SequencePvpService,
     @InjectRepository(User)
     private readonly userRepository:Repository<User>,
     private readonly jwtService:JwtService,
-    private readonly dataSource:DataSource
+    private readonly dataSource:DataSource,
   ){}
+
   async create(createUserDto:CreateUSerDto) {
     try {
       const { password, ...userData} = createUserDto;
@@ -25,12 +39,21 @@ export class AuthService {
         ...userData,
         password: bcrypt.hashSync(password, 10)
       });
-      const token = this.getJWToken({id: user.id});
-      user.token = token;
-      await this.userRepository.save(user)
+      await this.userRepository.save(user);
+      this.guessService.create({user});
+      this.memoryService.create({user});
+      this.sequenceService.create({user});
+      this.guesspvpService.create({user});
+      this.memorypvpService.create({user});
+      this.sequencepvpService.create({user});
       delete user.password; 
+      delete user.rol;
+      delete user.isActive;
+      const token = this.getJWToken({id: user.id});
+      console.log("ID ",user.id) 
       return {
         ...user,
+        token: token,
       };
     } catch (error) {
       this.handleDBErrors(error);
