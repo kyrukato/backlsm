@@ -4,7 +4,7 @@ import { Server, Socket } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
 
-@WebSocketGateway({cors: true})
+@WebSocketGateway({cors: true,namespace:'memory'})
 export class SocketMemoryGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server
   constructor(
