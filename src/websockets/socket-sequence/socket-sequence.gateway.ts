@@ -23,6 +23,7 @@ export class SocketSequenceGateway implements OnGatewayConnection, OnGatewayDisc
               payload = this.jwtService.verify(token);
               this.socketSequenceService.verifyClient(client,payload.id);
             } catch (error) {
+              console.log('conexión rechazada')
               client.disconnect();
               return;
             }

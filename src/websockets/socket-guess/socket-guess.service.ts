@@ -31,7 +31,10 @@ export class SocketGuessService {
 
     async verifyClient(client:Socket,userID:string){
         const user = await this.userRepository.findOneBy({id:userID});
-        if(!user || !user.isActive || (user.rol === 'guest')) client.disconnect();
+        if(!user || !user.isActive || (user.rol === 'guest')) {
+            console.log('conexión rechazada:')
+            client.disconnect();
+        }
     }
 
     /**Busca una sala disponible, si la encuentra devuelve el ID de la sala, sino devuelve null */
