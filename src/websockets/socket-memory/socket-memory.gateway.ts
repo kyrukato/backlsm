@@ -36,7 +36,7 @@ export class SocketMemoryGateway implements OnGatewayConnection, OnGatewayDiscon
       client.on('crearSala',(args, callback) => this.socketMemoryService.crearSala(client,args,callback))
       client.on('unirseASala',(args, callback) => this.socketMemoryService.unirseASala(client,callback,args))
       client.on('jugar',(args)=> {
-          console.log("Viendo de registrar una jugada ", this.socketMemoryService.buscarSala(args.salaId));
+          //console.log("Viendo de registrar una jugada ", this.socketMemoryService.buscarSala(args.salaId));
           this.socketMemoryService.buscarSala(args.salaId)?.jugar(args.jugador,args.status,args.card1,args.card2,args.par);
       });
       client.on('disconect',() => this.socketMemoryService.clienteDesconectado(client))

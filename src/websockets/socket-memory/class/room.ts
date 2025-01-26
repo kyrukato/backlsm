@@ -16,7 +16,6 @@ export class Sala{
     socket:Socket;
     estado:RoomStatus = "ESPERANDO_JUGADOR";
     tablero:Tablero = ['','','','','','','','','','','','','','','','','','','','','','','',''];
-    sena:string[] = ['','','','','','','','','','','','',];
     card1: number = -1;
     card2: number = -1;
     paresP1: number = 0;
@@ -42,22 +41,21 @@ export class Sala{
             this.estado = 'TURNO_P1';
             this.prepararTablero();
         }
-        this.comunicarSalas();
     }
 
     async prepararTablero(){
         let imageURL:string[] = ['','','','','','','','','','','','',];
-        let j = 0;
-        for (let i = 0; i < this.sena.length-1; i++) {
+        let j = 0, k=0;
+        for (let i = 0; i < imageURL.length; i++) {
             const data =  await this.dictionaryService.findSignal(this.señalRandom());
-            this.sena[i] = data[0].name;
             imageURL[i] = data[0].imageURL;
         }
         do {
-            this.tablero[j] = imageURL[j];
-            this.tablero[j+1] = imageURL[j];
+            this.tablero[j] = imageURL[k];
+            this.tablero[j+1] = imageURL[k];
             j+=2;
-        } while (j < this.tablero.length);
+            k++;
+        } while (k < imageURL.length);
         this.ordenarRandom();
     }
 
@@ -66,6 +64,7 @@ export class Sala{
             const j = Math.floor(Math.random() * (i + 1)); // Índice aleatorio
             [this.tablero[i], this.tablero[j]] = [this.tablero[j], this.tablero[i]]; // Intercambiar elementos
         }
+        this.comunicarSalas();
     }
 
 
@@ -87,6 +86,7 @@ export class Sala{
      * comunica el estado actual de la sala
      */
     comunicarSalas(){
+        console.log(this.getSalas());
         this.io.to("sala-"+this.id).emit("sala",this.getSalas());
     }
 
@@ -125,6 +125,8 @@ export class Sala{
                         this.comunicarSalas();
                         this.esPar = false;
                         this.card2 = -1;
+                        this.card1 = -1;
+                        this.comunicarSalas();
                     }
                     else{
                         this.estado = 'TURNO_P2';
@@ -134,6 +136,7 @@ export class Sala{
                         this.card1 = -1;
                         this.card2 = -1;
                         this.esPar = false;
+                        this.comunicarSalas();
                     }
                 }
             }
@@ -153,6 +156,8 @@ export class Sala{
                         this.comunicarSalas();
                         this.esPar = false;
                         this.card2 = -1;
+                        this.card1 = -1;
+                        this.comunicarSalas();
                     }
                     else{
                         this.estado = 'TURNO_P1';
@@ -162,6 +167,7 @@ export class Sala{
                         this.card1 = -1;
                         this.card2 = -1;
                         this.esPar = false;
+                        this.comunicarSalas();
                     }
                 }
             }

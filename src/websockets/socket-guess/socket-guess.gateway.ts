@@ -24,6 +24,7 @@ export class SocketGuessGateway implements OnGatewayConnection, OnGatewayDisconn
       payload = this.jwtService.verify(token);
       this.socketGuessService.verifyClient(client,payload.id);
     } catch (error) {
+      console.log('Conexión rechazada: adivina');
       client.disconnect();
       return;
     }
