@@ -6,6 +6,7 @@ import { Inject } from "@nestjs/common";
 import { DictionaryService } from "src/dictionary/dictionary.service";
 import { sign } from "crypto";
 import { stat } from "fs";
+import { resolve } from "path";
 
 export class Sala{
     numeroSeñasMax = 96;
@@ -95,7 +96,7 @@ export class Sala{
         this.comunicarSalas();
     }
     
-    jugar(numeroJugador:1|2,status:RoomStatus,carta1:number,carta2:number, par:boolean){
+    async jugar(numeroJugador:1|2,status:RoomStatus,carta1:number,carta2:number, par:boolean){
         if(status === 'TIEMPO_AGOTADO_P1'){
             this.estado = 'VICTORIA_P2';
             this.comunicarSalas();
@@ -136,6 +137,7 @@ export class Sala{
                         this.card1 = -1;
                         this.card2 = -1;
                         this.esPar = false;
+                        await this.pause(1500);
                         this.comunicarSalas();
                     }
                 }
@@ -167,10 +169,15 @@ export class Sala{
                         this.card1 = -1;
                         this.card2 = -1;
                         this.esPar = false;
+                        await this.pause(1500);
                         this.comunicarSalas();
                     }
                 }
             }
         }
+    }
+
+    pause(ms:number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 }
