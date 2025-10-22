@@ -33,7 +33,7 @@ export class Dictionary {
     description: string;
 
     @ApiProperty({
-        description:'URL donde se encuentra la imagen de la seña',
+        description:'URL donde se encuentra la imagen de la seña dentro del front',
         type: 'string',
         example: '/Fechas/MARZO.png',
         required: true,
