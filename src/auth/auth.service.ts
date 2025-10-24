@@ -15,6 +15,7 @@ import { GuessPvpService } from 'src/games/pvp/guess-pvp/guess-pvp.service';
 import { MemoryPvpService } from 'src/games/pvp/memory-pvp/memory-pvp.service';
 import { SequencePvpService } from 'src/games/pvp/sequence-pvp/sequence-pvp.service';
 import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
+import { ConfigService } from '@nestjs/config';
 
 
 @Injectable()
@@ -40,15 +41,16 @@ export class AuthService {
         password: bcrypt.hashSync(password, 10)
       });
       await this.userRepository.save(user);
-      this.guessService.create({user});
-      this.memoryService.create({user});
-      this.sequenceService.create({user});
+      this.CreateGuessLevels(user);
+      this.CreateMemoryLevels(user);
+      this.CreateSequenceLevels(user);
       this.guesspvpService.create({user});
       this.memorypvpService.create({user});
       this.sequencepvpService.create({user});
       delete user.password; 
       delete user.rol;
       delete user.isActive;
+      delete user.email;
       const token = this.getJWToken({id: user.id});
       console.log("ID ",user.id) 
       return {
@@ -123,7 +125,53 @@ export class AuthService {
     return user;
   }
 
+  private async CreateGuessLevels(user: User){
+    const maxLevel = parseInt(process.env.MAX_LEVEL_GUESS);
+      this.guessService.create({
+        user,
+        level: 1,
+        unlocked: true
+      });
+      for (let i = 1; i < maxLevel; i++) {
+        this.guessService.create({
+          user,
+          level: (i+1),
+          unlocked: false
+        });
+      }
+  }
 
+  private async CreateMemoryLevels(user:User){
+    const maxLevel = parseInt(process.env.MAX_LEVEL_MEMORY);
+    this.memoryService.create({
+        user,
+        level: 1,
+        unlocked: true
+      });
+    for (let i = 1; i < maxLevel; i++) {
+      this.memoryService.create({
+        user,
+        level: (i+1),
+        unlocked: false
+      });      
+    }
+  }
+
+  private async CreateSequenceLevels(user:User){
+    const maxLevel = parseInt(process.env.MAX_LEVEL_SEQUENCE);
+    this.sequenceService.create({
+        user,
+        level: 1,
+        unlocked: true
+      });
+    for (let i = 1; i < maxLevel; i++) {
+      this.sequenceService.create({
+        user,
+        level: (i+1),
+        unlocked: false
+      });      
+    }
+  }
 
   //Crear el JWT
   private getJWToken(payload:JwtPayload){

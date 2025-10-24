@@ -27,7 +27,7 @@ export class GuessPvpService {
     });
     return ranking.map( (rank) => ({
       ...rank,
-      user: rank.user.name
+      user: rank.user.nickname
     }));
   }
 

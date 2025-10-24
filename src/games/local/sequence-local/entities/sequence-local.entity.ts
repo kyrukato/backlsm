@@ -49,4 +49,22 @@ export class SequenceLocal {
     })
     points: number;
 
+    @ApiProperty({
+        description: 'Registro que almacena la información de cada nivel individual de cada juego',
+        type: 'number',
+        example: 1,
+        required: true,
+    })
+    @Column('int')
+    level: number;
+
+    @ApiProperty({
+        description: 'Describe si el usuario ha desbloqueado el nivel o no.',
+        type: 'boolean',
+        example: false,
+        required: true,
+    })
+    @Column('bool')
+    unlocked: boolean;
+
 }
