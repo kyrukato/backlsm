@@ -1,5 +1,7 @@
 
 import { ApiProperty } from "@nestjs/swagger";
+import { MinLength } from "class-validator";
+import { Grades } from "src/common/interface/grades";
 import { GuessLocal } from "src/games/local/guess-local/entities/guess-local.entity";
 import { MemoryLocal } from "src/games/local/memory-local/entities/memory-local.entity";
 import { SequenceLocal } from "src/games/local/sequence-local/entities/sequence-local.entity";
@@ -70,6 +72,63 @@ export class User {
         default: 'user'
     })
     rol: string;
+
+    @ApiProperty({
+        description: 'Nombre o apodo con el cual el usuario se identifica',
+        example: 'apodoUsuario',
+        required: true,
+    })
+    @Column('text',{
+        unique: true,
+        nullable: false
+    })
+    @MinLength(3)
+    nickname: string;
+
+    @ApiProperty({
+        description: 'Nivel de dominio de la LSM según el Marco Común Europeo de Referencia (MCER)',
+        example: 'A1',
+        enum: Grades,
+        default: 'A1',
+        required: true, 
+    })
+    @Column('text',{
+        default: Grades.a1
+    })
+    grade: Grades;
+
+    @ApiProperty({
+        description: 'Nivel máximo alcanzado en el juego Recuerda la secuencia',
+        example: 1,
+        default: 1,
+        required: true
+    })
+    @Column('int',{
+        default: 1,
+    })
+    level_sequence: number;
+
+    @ApiProperty({
+        description: 'Nivel máximo alcanzado en el juego Memoria de señas',
+        example: 1,
+        default: 1,
+        required: true
+    })
+    @Column('int',{
+        default: 1,
+    })
+    level_memory: number;
+
+    @ApiProperty({
+        description: 'Nivel máximo alcanzado en el juego Adivina la seña',
+        example: 1,
+        default: 1,
+        required: true
+    })
+    @Column('int',{
+        default: 1,
+    })
+    level_guess: number;
 
     @OneToMany(
         () => GuessLocal,

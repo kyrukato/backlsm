@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Grades } from "src/common/interface/grades";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -33,7 +34,7 @@ export class Dictionary {
     description: string;
 
     @ApiProperty({
-        description:'URL donde se encuentra la imagen de la seña',
+        description:'URL donde se encuentra la imagen de la seña dentro del front',
         type: 'string',
         example: '/Fechas/MARZO.png',
         required: true,
@@ -49,4 +50,7 @@ export class Dictionary {
     })
     @Column('text')
     class: string;
+
+    @Column('text')
+    grade: Grades;
 }

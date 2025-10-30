@@ -38,6 +38,24 @@ export class GuessLocal {
     quantity: number;
 
     @ApiProperty({
+        description: 'Registro que almacena la información de cada nivel individual de cada juego',
+        type: 'number',
+        example: 1,
+        required: true,
+    })
+    @Column('int')
+    level: number;
+
+    @ApiProperty({
+        description: 'Describe si el usuario ha desbloqueado el nivel o no.',
+        type: 'boolean',
+        example: false,
+        required: true,
+    })
+    @Column('bool')
+    unlocked: boolean;
+
+    @ApiProperty({
         description:'Llave foránea que almacena el ID del usuario',
         type: 'string',
         example: '2104d802-027f-4ec6-838a-e7b7be5d570f',

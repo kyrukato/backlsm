@@ -29,6 +29,11 @@ export class MemoryLocalController {
     return this.memoryLocalService.findOne(id);
   }
 
+  @Get('level/:id')
+  findLevel(@Param('id') id:string){
+    return this.memoryLocalService.findLevels(id);
+  }
+
   @ApiOperation({summary: 'Actualiza el puntaje del usuario', description:'Actualiza el puntaje del usuario después de terminar el juego'})
   @ApiResponse({status: 200, description:'Retorna puntaje actualizado', example:{
   "id": 4,

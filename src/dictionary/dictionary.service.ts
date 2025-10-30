@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateDictionaryDto } from './dto/create-dictionary.dto';
-import { UpdateDictionaryDto } from './dto/update-dictionary.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Dictionary } from './entities/dictionary.entity';
 import { Repository } from 'typeorm';
@@ -23,12 +22,16 @@ export class DictionaryService {
   }
 
   async findOne(cat: string) {
-      const products = await this.dictionaryRepository.find({
-        where: {
-          class: cat,
-        }
-      });
-      return products;
+    const products = await this.dictionaryRepository.find({
+      where: {
+        class: cat,
+      },
+      order: {name: 'ASC'},
+    });
+    if(cat === 'Numeros'){
+      products.sort((a,b) => Number(a.name) - Number(b.name));
+    }  
+    return products;
   }
 
   async findSignal(id:number){

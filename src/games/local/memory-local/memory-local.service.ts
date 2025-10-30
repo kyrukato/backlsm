@@ -28,6 +28,18 @@ export class MemoryLocalService {
     } 
   }
 
+  async findLevels(idUder:string){
+    try {
+      return await this.memoryLocalRepository.find({
+        where: {
+          user: {id: idUder}
+        }
+      })
+    } catch (error) {
+      this.handleDBErrors(error);
+    }
+  }
+
   async update(updateMemoryLocalDto: UpdateMemoryLocalDto) {
     const {userID, ...toupdate} = updateMemoryLocalDto;
     const memorylocal = await this.memoryLocalRepository.findOneBy({
