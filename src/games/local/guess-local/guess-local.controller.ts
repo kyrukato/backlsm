@@ -29,6 +29,11 @@ export class GuessLocalController {
   findOne(@Param('id') id: string) {
     return this.guessLocalService.findOne(id);
   }
+  
+  @Get('/level/:id')
+  findLevel(@Param('id') id: string){
+    return this.guessLocalService.findLevels(id);
+  }
 
   @ApiOperation({summary: 'Actualizar puntajes', description: 'Actualiza el puntaje máximo alcanzado por el usuario y/o la cantidad máxima de señas adivinadas por el usuario en una partida'})
   @ApiResponse({status: 200, description: 'Retorna la información actualizada', example:{"id": 6,

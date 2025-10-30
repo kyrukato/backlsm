@@ -28,6 +28,18 @@ export class SequenceLocalService {
     } 
   }
 
+  async findLevels(idUser:string){
+    try {
+      return await this.sequenceLocalRepository.find({
+        where: {
+          user: {id: idUser}
+        }
+      })
+    } catch (error) {
+      this.handleDBErrors(error);
+    }
+  }
+
   async update(updateSequenceLocalDto: UpdateSequenceLocalDto) {
     const {userID, ...toupdate} = updateSequenceLocalDto;
     const Sequencelocal = await this.sequenceLocalRepository.findOneBy({

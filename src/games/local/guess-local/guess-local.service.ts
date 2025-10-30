@@ -29,6 +29,18 @@ export class GuessLocalService {
     } 
   }
 
+  async findLevels(idUser: string){
+    try{
+      return await this.guessLocalRepository.find({
+        where: {
+          user: {id: idUser}
+        }
+      });
+    }catch(error){
+      this.handleDBErrors(error);
+    }
+  }
+
   async update(updateGuessLocalDto: UpdateGuessLocalDto) {
     const {userID, ...toupdate} = updateGuessLocalDto;
     const guesslocal = this.findOne(userID);

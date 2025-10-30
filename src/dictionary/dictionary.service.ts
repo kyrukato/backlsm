@@ -29,7 +29,7 @@ export class DictionaryService {
       order: {name: 'ASC'},
     });
     if(cat === 'Numeros'){
-      const signal = products.sort((a,b) => Number(a.name) - Number(b.name));
+      products.sort((a,b) => Number(a.name) - Number(b.name));
     }  
     return products;
   }
