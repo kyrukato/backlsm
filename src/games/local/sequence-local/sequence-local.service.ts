@@ -42,30 +42,32 @@ export class SequenceLocalService {
 
   async update(updateSequenceLocalDto: UpdateSequenceLocalDto) {
     const {userID, ...toupdate} = updateSequenceLocalDto;
-    const Sequencelocal = await this.sequenceLocalRepository.findOneBy({
+    const sequencelocal = await this.sequenceLocalRepository.findOneBy({
       user: {id: userID}
     });
-    if(!Sequencelocal){
+    if(!sequencelocal){
       throw new NotFoundException(`El usuario no fue encontrado`)
     }
     const updateSequencelocal = await this.sequenceLocalRepository.preload({
-      id: Sequencelocal.id,
+      id: sequencelocal.id,
       user: {id: userID},
       ...toupdate
     })
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-    try {
-      await queryRunner.manager.save(updateSequencelocal);
-      await queryRunner.commitTransaction();
-      await queryRunner.release();
-      delete updateSequencelocal.user;
-      return updateSequencelocal;
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      await queryRunner.release();
-      this.handleDBErrors(error);
+    if(toupdate.points > sequencelocal.points){
+      const queryRunner = this.dataSource.createQueryRunner();
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+      try {
+        await queryRunner.manager.save(updateSequencelocal);
+        await queryRunner.commitTransaction();
+        await queryRunner.release();
+        delete updateSequencelocal.user;
+        return updateSequencelocal;
+      } catch (error) {
+        await queryRunner.rollbackTransaction();
+        await queryRunner.release();
+        this.handleDBErrors(error);
+      }
     }
   }
 
