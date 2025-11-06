@@ -28,6 +28,18 @@ export class MemoryLocalService {
     } 
   }
 
+  async findLevels(idUder:string){
+    try {
+      return await this.memoryLocalRepository.find({
+        where: {
+          user: {id: idUder}
+        }
+      })
+    } catch (error) {
+      this.handleDBErrors(error);
+    }
+  }
+
   async update(updateMemoryLocalDto: UpdateMemoryLocalDto) {
     const {userID, ...toupdate} = updateMemoryLocalDto;
     const memorylocal = await this.memoryLocalRepository.findOneBy({
@@ -41,19 +53,21 @@ export class MemoryLocalService {
       user: {id: userID},
       ...toupdate
     })
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-    try {
-      await queryRunner.manager.save(updateguesslocal);
-      await queryRunner.commitTransaction()
-      await queryRunner.release()
-      delete updateguesslocal.user;
-      return updateguesslocal;
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      await queryRunner.release();
-      this.handleDBErrors(error);
+    if(toupdate.points > memorylocal.points){
+      const queryRunner = this.dataSource.createQueryRunner();
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+      try {
+        await queryRunner.manager.save(updateguesslocal);
+        await queryRunner.commitTransaction()
+        await queryRunner.release()
+        delete updateguesslocal.user;
+        return updateguesslocal;
+      } catch (error) {
+        await queryRunner.rollbackTransaction();
+        await queryRunner.release();
+        this.handleDBErrors(error);
+      }
     }
   }
 

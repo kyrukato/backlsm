@@ -29,30 +29,44 @@ export class GuessLocalService {
     } 
   }
 
+  async findLevels(idUser: string){
+    try{
+      return await this.guessLocalRepository.find({
+        where: {
+          user: {id: idUser}
+        }
+      });
+    }catch(error){
+      this.handleDBErrors(error);
+    }
+  }
+
   async update(updateGuessLocalDto: UpdateGuessLocalDto) {
     const {userID, ...toupdate} = updateGuessLocalDto;
-    const guesslocal = this.findOne(userID);
+    const guesslocal = await this.findOne(userID);
     if(!guesslocal){
       throw new NotFoundException(`El usuario no fue encontrado`)
     }
     const updateguesslocal = await this.guessLocalRepository.preload({
-      id: (await guesslocal).id,
+      id: guesslocal.id,
       user: {id: userID},
       ...toupdate,
     })
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-    try {
-      await queryRunner.manager.save(updateguesslocal);
-      await queryRunner.commitTransaction()
-      await queryRunner.release()
-      delete updateguesslocal.user;
-      return updateguesslocal;
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      await queryRunner.release();
-      this.handleDBErrors(error);
+    if(toupdate.points > guesslocal.points){
+      const queryRunner = this.dataSource.createQueryRunner();
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+      try {
+        await queryRunner.manager.save(updateguesslocal);
+        await queryRunner.commitTransaction()
+        await queryRunner.release()
+        delete updateguesslocal.user;
+        return updateguesslocal;
+      } catch (error) {
+        await queryRunner.rollbackTransaction();
+        await queryRunner.release();
+        this.handleDBErrors(error);
+      }
     }
   }
 

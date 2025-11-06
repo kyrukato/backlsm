@@ -30,6 +30,11 @@ export class SequenceLocalController {
     return this.sequenceLocalService.findOne(id);
   }
 
+  @Get('level/:id')
+  findLevel(@Param('id') id:string){
+    return this.sequenceLocalService.findLevels(id);
+  }
+
   @ApiOperation({summary: 'Actualizar información', description:'Actualiza el puntaje máximo alcanzado y/o la secuencia máxima registrada por el usuario durante una partida'})
   @ApiResponse({status: 200, description:'Retorna la información actualizada', example:{
     "id": 3,
