@@ -19,16 +19,15 @@ async function bootstrap() {
       forbidNonWhitelisted:true,
     }),
   );
-  app.enableCors(
-    {
-      origin: [
-        'https://lsm-front.vercel.app'
-      ],
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
-      credentials: true
-    }
-  );
+  app.enableCors({
+    origin: [
+      'https://lsm-front.vercel.app', // tu dominio en producción
+      'http://localhost:4200',        // opcional para pruebas locales
+    ],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  });
   await app.listen(process.env.PORT ?? 3001);
 }
 bootstrap();
