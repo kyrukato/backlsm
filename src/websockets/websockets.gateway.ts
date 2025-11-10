@@ -1,7 +1,17 @@
 import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { WebsocketsService } from './websockets.service';
 import { Socket,Server } from 'socket.io';
-@WebSocketGateway({cors:true, namespace:'n'})
+@WebSocketGateway({
+  namespace: 'n',
+  cors: {
+    origin: [
+      'https://lsm-front.vercel.app', // dominio del frontend en producción
+      'http://localhost:4200',        // desarrollo local (Angular)
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+})
 export class WebsocketsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
   constructor(private readonly websocketsService: WebsocketsService) {}
