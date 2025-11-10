@@ -4,7 +4,15 @@ import { Server, Socket } from 'socket.io';
 import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 
-@WebSocketGateway({cors: true, namespace:'sequence'})
+@WebSocketGateway({cors: {
+    origin: [
+      'https://lsm-front.vercel.app', // dominio del frontend en producción
+      'http://localhost:4200',        // desarrollo local (Angular)
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true,
+  }, 
+  namespace:'sequence'})
 export class SocketSequenceGateway implements OnGatewayConnection, OnGatewayDisconnect{
   @WebSocketServer() server: Server
     constructor(

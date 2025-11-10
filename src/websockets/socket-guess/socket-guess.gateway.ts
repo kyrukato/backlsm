@@ -4,7 +4,15 @@ import { Server, Socket } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'src/common/interface/jwt-payload.interface';
 
-@WebSocketGateway({cors: true, namespace:'guess'})
+@WebSocketGateway({cors: {
+    origin: [
+      'https://lsm-front.vercel.app', // dominio del frontend en producción
+      'http://localhost:4200',        // desarrollo local (Angular)
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+  namespace:'guess'})
 export class SocketGuessGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server
   constructor(
