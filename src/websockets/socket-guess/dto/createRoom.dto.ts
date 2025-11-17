@@ -1,4 +1,4 @@
-import { IsBoolean, IsString, IsUUID } from "class-validator";
+import { IsBoolean, isString, IsString, IsUUID } from "class-validator";
 
 export class CreateRoomDto{
     @IsBoolean()
@@ -7,4 +7,7 @@ export class CreateRoomDto{
     @IsUUID()
     @IsString()
     userID: string;
+
+    @IsString()
+    nickname:string;
 }

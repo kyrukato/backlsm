@@ -8,4 +8,7 @@ export class JoinRoomDto{
     @IsUUID()
     @IsString()
     userID: string;
+
+    @IsString()
+    nickname: string;
 }

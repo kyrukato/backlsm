@@ -48,7 +48,6 @@ export class SocketGuessService {
     }
 
     async crearSala(socket:Socket, args:CreateRoomDto , callback: Function){
-        const user = await this.userRepository.findOneBy({id:args.userID});
         console.log('creando salaa');
         const nuevaSala = new Sala(args,socket,this.server,this.dictionaryService);
         nuevaSala.id = this.idProximaSala;
@@ -57,17 +56,17 @@ export class SocketGuessService {
         this.salas.push(nuevaSala);
         this.unirseASala(socket,callback,{
             roomID: nuevaSala.id,
-            userID: user.nickname
+            userID: args.userID,
+            nickname: args.nickname
         });
     }
 
-    async unirseASala(socket:Socket, callback: Function, args:JoinRoomDto){
+    unirseASala(socket:Socket, callback: Function, args:JoinRoomDto){
         if(!this.salas.length) return callback({exito:false, mensaje:'No existen salas'});
         const salaIndex = this.salas.findIndex(sala => sala.id === args.roomID);
         if(salaIndex === -1) return callback({exito:false, mensaje:'No existe sala con ID: '+args.roomID});
         if(this.salas[salaIndex].jugadores[0].name && this.salas[salaIndex].jugadores[1].name) return callback({exito:false, mensaje:'La sala está llena'});
-        const user = await this.userRepository.findOneBy({id:args.userID});
-        this.salas[salaIndex].agregarJugador(user.nickname);
+        this.salas[salaIndex].agregarJugador(args.nickname);
         socket.join('sala-'+this.salas[salaIndex].id);
         return callback({exito:true, mensaje:'Unido a la sala: '+this.salas[salaIndex].id, sala: this.salas[salaIndex].getSalas()});
     }
