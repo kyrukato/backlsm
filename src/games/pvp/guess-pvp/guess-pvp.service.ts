@@ -20,9 +20,9 @@ export class GuessPvpService {
 
   async findTopTen() {
     const ranking = await this.guessPvpRepository.find({
+      order: {victorys: 'DESC'},
       take: 10,
       skip: 0,
-      order: {points: 'DESC'},
       relations: {user:true},
     });
     return ranking.map( (rank) => ({
@@ -52,7 +52,7 @@ export class GuessPvpService {
     const updateguessPvp = await this.guessPvpRepository.preload({
       id: guessPvp.id,
       user: {id: userID},
-      ...toupdate
+      victorys: guessPvp.victorys ++,
     })
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
