@@ -65,8 +65,7 @@ export class SocketGuessService {
         const salaIndex = this.salas.findIndex(sala => sala.id === args.roomID);
         if(salaIndex === -1) return callback({exito:false, mensaje:'No existe sala con ID: '+args.roomID});
         if(this.salas[salaIndex].jugadores[0].name && this.salas[salaIndex].jugadores[1].name) return callback({exito:false, mensaje:'La sala está llena'});
-        const user = await this.userRepository.findOneBy({id:args.userID});
-        this.salas[salaIndex].agregarJugador(user.nickname);
+        this.salas[salaIndex].agregarJugador(args.userID);
         socket.join('sala-'+this.salas[salaIndex].id);
         return callback({exito:true, mensaje:'Unido a la sala: '+this.salas[salaIndex].id, sala: this.salas[salaIndex].getSalas()});
     }
