@@ -42,24 +42,25 @@ export class GuessPvpService {
   }
 
   async update( updateGuessPvpDto: UpdateGuessPvpDto) {
-    const {userID, ...toupdate} = updateGuessPvpDto;
+    const {userID} = updateGuessPvpDto;
     const guessPvp = await this.guessPvpRepository.findOneBy({
       user: {id: userID}
     });
     if(!guessPvp){
       throw new NotFoundException(`El usuario no fue encontrado`)
     }
-    let victorias = guessPvp.victorys ++;
+    let victorias = guessPvp.victorys + 1;
+    console.log('VICTORIAS ACTUALIZADAS: ',victorias);
     const updateguessPvp = await this.guessPvpRepository.preload({
       id: guessPvp.id,
       user: {id: userID},
       victorys: victorias,
-      ...toupdate
     })
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
+      console.log(updateguessPvp);
       await queryRunner.manager.save(updateguessPvp);
       await queryRunner.commitTransaction();
       await queryRunner.release();
