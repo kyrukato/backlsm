@@ -54,6 +54,7 @@ export class GuessPvpService {
       id: guessPvp.id,
       user: {id: userID},
       victorys: victorias,
+      ...toupdate
     })
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
