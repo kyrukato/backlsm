@@ -7,7 +7,4 @@ export class CreateRoomDto{
     @IsUUID()
     @IsString()
     userID: string;
-
-    @IsString()
-    nickname:string;
 }
