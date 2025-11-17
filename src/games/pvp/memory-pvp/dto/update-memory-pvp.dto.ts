@@ -2,15 +2,15 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsJWT, IsNumber, IsPositive, IsString, IsUUID } from "class-validator";
 
 export class UpdateMemoryPvpDto {
-    @ApiProperty({
-        description:'Número máximo de victorias acumuladas por el usuario en este juego',
-        type: 'number',
-        example: 100,
-        required: true,
-    })
-    @IsNumber()
-    @IsPositive()
-    victorys: number;
+    // @ApiProperty({
+    //     description:'Número máximo de victorias acumuladas por el usuario en este juego',
+    //     type: 'number',
+    //     example: 100,
+    //     required: true,
+    // })
+    // @IsNumber()
+    // @IsPositive()
+    // victorys: number;
 
     @ApiProperty({
         description:'ID del usuario',

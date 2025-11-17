@@ -20,9 +20,9 @@ export class MemoryPvpService {
 
   async findTopTen() {
     const ranking = await this.memoryPvpRepository.find({
+      order: {victorys: 'DESC'},
       take: 10,
       skip: 0,
-      order: {victorys: 'DESC'},
       relations: {user:true},
     });
     return ranking.map( (rank) => ({
@@ -42,17 +42,18 @@ export class MemoryPvpService {
   }
 
   async update(updateMemoryPvpDto: UpdateMemoryPvpDto) {
-    const {userID, ...toupdate} = updateMemoryPvpDto;
+    const {userID} = updateMemoryPvpDto;
     const MemoryPvp = await this.memoryPvpRepository.findOneBy({
       user: {id: userID}
     });
     if(!MemoryPvp){
       throw new NotFoundException(`El usuario no fue encontrado`)
     }
+    let victorias = MemoryPvp.victorys +1;
     const updateMemoryPvp = await this.memoryPvpRepository.preload({
       id: MemoryPvp.id,
       user: {id: userID},
-      ...toupdate
+      victorys: victorias
     })
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();

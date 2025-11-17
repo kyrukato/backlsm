@@ -50,7 +50,6 @@ export class GuessPvpService {
       throw new NotFoundException(`El usuario no fue encontrado`)
     }
     let victorias = guessPvp.victorys + 1;
-    console.log('VICTORIAS ACTUALIZADAS: ',victorias);
     const updateguessPvp = await this.guessPvpRepository.preload({
       id: guessPvp.id,
       user: {id: userID},
@@ -60,7 +59,6 @@ export class GuessPvpService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      console.log(updateguessPvp);
       await queryRunner.manager.save(updateguessPvp);
       await queryRunner.commitTransaction();
       await queryRunner.release();

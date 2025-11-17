@@ -20,9 +20,9 @@ export class SequencePvpService {
 
   async findTopTen() {
     const ranking = await this.sequencePvpRepository.find({
+      order: {victorys: 'DESC'},
       take: 10,
       skip: 0,
-      order: {points: 'DESC'},
       relations: {user:true},
     });
     return ranking.map( (rank) => ({
@@ -42,17 +42,18 @@ export class SequencePvpService {
   }
 
   async update(updateSequencePvpDto: UpdateSequencePvpDto) {
-    const {userID, ...toupdate} = updateSequencePvpDto;
+    const {userID} = updateSequencePvpDto;
     const SequencePvp = await this.sequencePvpRepository.findOneBy({
       user: {id: userID}
     });
     if(!SequencePvp){
       throw new NotFoundException(`El usuario no fue encontrado`)
     }
+    let victorias = SequencePvp.victorys +1;
     const updateSequencePvp = await this.sequencePvpRepository.preload({
       id: SequencePvp.id,
       user: {id: userID},
-      ...toupdate
+      victorys: victorias,
     })
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
