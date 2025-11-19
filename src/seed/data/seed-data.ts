@@ -507,7 +507,7 @@ export const initialData: seedData = {
         {
             name:'ABRIL',
             description: 'Con la mano dominante, se flexionan los dedos del índice al meñique hacia la palma, se hace un movimiento circular alrededor de la oreja con la mano dominante.',
-            imageURL: '/Fechas/MARZO.png',
+            imageURL: '/Fechas/ABRIL.png',
             class: 'Fechas',
             grade: Grades.a2
         },
